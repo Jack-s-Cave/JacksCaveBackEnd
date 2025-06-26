@@ -1,6 +1,11 @@
 # 🚀 Getting started with Strapi
 
 First of all, you have to do npm install
+```
+npm install
+# or
+yarn install
+```
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
