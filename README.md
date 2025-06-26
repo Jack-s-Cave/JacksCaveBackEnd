@@ -1,5 +1,7 @@
 # 🚀 Getting started with Strapi
 
+First of all, you have to do npm install
+
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ### `develop`
@@ -39,6 +41,175 @@ Strapi gives you many possible deployment options for your project including [St
 ```
 yarn strapi deploy
 ```
+
+# Strapi API Reference
+
+**Base URL:** `http://localhost:1337/api`
+
+All examples assume you have stored your Admin‑API token (or a Users‑Permissions JWT) in an environment variable called `STRAPI_TOKEN` and pass it in the `Authorization` header:
+
+```http
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+```
+
+---
+
+## 1 · Author Profiles
+
+### 1.1  Get **all** profiles (+ photo URL)
+
+```http
+GET /author-profiles?populate[foto][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "nombre": "Sebastian Huertas",
+        "bio": "Example profile",
+        "social_media": {
+          "instagram": "https://www.instagram.com/xtsebas/"
+        },
+        "foto": {
+          "data": {
+            "id": 1,
+            "attributes": {
+              "url": "/uploads/sonic_567a1e1ae3.jpg"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "pagination": { "total": 1, "page": 1, "pageSize": 25, "pageCount": 1 }
+  }
+}
+```
+
+</details>
+
+---
+
+### 1.2  Get **one** profile by `id` (+ photo URL)
+
+```http
+GET /author-profiles?filters[id][$eq]=2&populate[foto][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "nombre": "Sebastian Huertas",
+        "bio": "Example profile",
+        "foto": {
+          "data": {
+            "attributes": {
+              "url": "/uploads/sonic_567a1e1ae3.jpg"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": { "pagination": { "total": 1 } }
+}
+```
+
+</details>
+
+---
+
+## 2 · Articles
+
+### 2.1  Get **all** articles (+ media URL)
+
+```http
+GET /articles?populate[media][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Por que las focas son focas",
+        "media": [
+          {
+            "id": 2,
+            "attributes": {
+              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "attributes": {
+        "title": "Por que explorer solo lo usamos para descargar otro navegador",
+        "media": null
+      }
+    }
+  ],
+  "meta": { "pagination": { "total": 2 } }
+}
+```
+
+</details>
+
+---
+
+### 2.2  Get **all** articles authored by a given profile
+
+```http
+GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Por que las focas son focas",
+        "media": [
+          {
+            "attributes": {
+              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": { "pagination": { "total": 1 } }
+}
+```
+
+</details>
+
+---
+
 
 ## 📚 Learn more
 

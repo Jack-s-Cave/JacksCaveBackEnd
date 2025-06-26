@@ -1,0 +1,15 @@
+# Get all users
+GET http://localhost:1337/api/author-profiles?populate[foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get one user
+GET http://localhost:1337/api/author-profiles?filters[id][$eq]=2&populate[foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all articles
+GET http://localhost:1337/api/articles?populate[media][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all articles of one user
+GET http://localhost:1337/api/articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
