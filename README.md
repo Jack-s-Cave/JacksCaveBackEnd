@@ -215,6 +215,98 @@ GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 
 ---
 
+---
+
+## 3 · Podcast episodes
+
+### 2.1  Get **all** podcast episodes (+ media URL)
+
+```http
+GET /podcasts?populate[image][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "hqbw0e8fpwdeiu4a5jcbur6x",
+      "title": "Desarrollar videojuegos en Guatemala | EP 1 Dennis Aldana",
+      "date_publication": "2024-09-19",
+      "link": "https://www.youtube.com/watch?v=zlSbBsJYFGA",
+      "createdAt": "2025-07-12T22:29:05.874Z",
+      "updatedAt": "2025-07-12T22:29:05.874Z",
+      "publishedAt": "2025-07-12T22:29:05.679Z",
+      "locale": "en",
+      "image": {
+        "id": 3,
+        "documentId": "m8ru6j4tdtd7qd2qmjtdjmsu",
+        "url": "/uploads/Screenshot_2025_07_12_162816_0a9f9bf1c9.png"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+### 2.2  Get **one** podcast episode 
+
+```http
+GET /podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "hqbw0e8fpwdeiu4a5jcbur6x",
+      "title": "Desarrollar videojuegos en Guatemala | EP 1 Dennis Aldana",
+      "date_publication": "2024-09-19",
+      "link": "https://www.youtube.com/watch?v=zlSbBsJYFGA",
+      "createdAt": "2025-07-12T22:29:05.874Z",
+      "updatedAt": "2025-07-12T22:29:05.874Z",
+      "publishedAt": "2025-07-12T22:29:05.679Z",
+      "locale": "en",
+      "image": {
+        "id": 3,
+        "documentId": "m8ru6j4tdtd7qd2qmjtdjmsu",
+        "url": "/uploads/Screenshot_2025_07_12_162816_0a9f9bf1c9.png"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</details>
+
+---
+
 
 ## 📚 Learn more
 

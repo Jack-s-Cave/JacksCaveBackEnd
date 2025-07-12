@@ -13,3 +13,11 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 # Get all articles of one user
 GET http://localhost:1337/api/articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all Podcast
+GET http://localhost:1337/api/podcasts?populate[image][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get one Podcast
+GET http://localhost:1337/api/podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
