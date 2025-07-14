@@ -215,11 +215,9 @@ GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 
 ---
 
----
-
 ## 3 · Podcast episodes
 
-### 2.1  Get **all** podcast episodes (+ media URL)
+### 3.1  Get **all** podcast episodes (+ media URL)
 
 ```http
 GET /podcasts?populate[image][fields][0]=url
@@ -263,7 +261,7 @@ GET /podcasts?populate[image][fields][0]=url
 
 ---
 
-### 2.2  Get **one** podcast episode 
+### 3.2  Get **one** podcast episode 
 
 ```http
 GET /podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
@@ -300,6 +298,58 @@ GET /podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
       "total": 1
     }
   }
+}
+```
+
+</details>
+
+---
+## 4 · Podcast crew
+
+### 4.1  Get **all** podcast crew (+ media URL)
+
+```http
+GET /podcast-crew?populate[photos][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": {
+    "id": 1,
+    "documentId": "z9ts5zpjpsnskxax1fe17a48",
+    "nombre": "enTERAte",
+    "conductores": {
+      "conductor_1": {
+        "año": "4to",
+        "nombre": "Sebastian Huertas"
+      },
+      "conductor_2": {
+        "año": "4to",
+        "nombre": "Sofia Garcia"
+      }
+    },
+    "proposito": "Ser un podcast educativo y que ayude a los de nuevo ingreso o a mas gente a interesarse por Ciencias de la computacion",
+    "createdAt": "2025-07-13T23:46:30.484Z",
+    "updatedAt": "2025-07-13T23:56:38.622Z",
+    "publishedAt": "2025-07-13T23:56:37.920Z",
+    "locale": "en",
+    "photos": [
+      {
+        "id": 2,
+        "documentId": "v523h1ahq3mq01uawb12xbmx",
+        "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+      },
+      {
+        "id": 1,
+        "documentId": "s6ryiy7s19b6ypojrf4hxcw5",
+        "url": "/uploads/sonic_567a1e1ae3.jpg"
+      }
+    ]
+  },
+  "meta": {}
 }
 ```
 

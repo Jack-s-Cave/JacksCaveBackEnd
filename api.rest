@@ -21,3 +21,7 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 # Get one Podcast
 GET http://localhost:1337/api/podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get podcast crew
+GET http://localhost:1337/api/podcast-crew?populate[photos][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
