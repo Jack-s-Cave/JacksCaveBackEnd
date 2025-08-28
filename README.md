@@ -215,7 +215,7 @@ GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 
 ---
 
-### 2.3  Get **recent** articles (6)
+### 2.3  Get **recents** articles (6)
 
 ```http
 GET /articles
@@ -374,6 +374,54 @@ GET /podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
     "pagination": {
       "page": 1,
       "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+---
+
+</details>
+
+### 3.3  Get **recents** podcast episode (6)
+
+```http
+GET /podcasts
+      ?sort[0]=date_publication:desc
+      &pagination[page]=1
+      &pagination[pageSize]=6
+      &populate[image][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "k528tp36miz745jt3jyy93xj",
+      "title": "\nDesarrollar videojuegos en Guatemala | EP 1 Dennis Aldana",
+      "date_publication": "2024-09-19",
+      "link": "https://www.youtube.com/watch?v=zlSbBsJYFGA",
+      "createdAt": "2025-08-28T00:36:45.157Z",
+      "updatedAt": "2025-08-28T00:36:45.157Z",
+      "publishedAt": "2025-08-28T00:36:44.967Z",
+      "locale": "en",
+      "image": {
+        "id": 3,
+        "documentId": "m8ru6j4tdtd7qd2qmjtdjmsu",
+        "url": "/uploads/Screenshot_2025_07_12_162816_0a9f9bf1c9.png"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 6,
       "pageCount": 1,
       "total": 1
     }
