@@ -17,3 +17,9 @@ jobs:
     with:
       strict: true
       check_pr_title: true
+      
+  code-quality:
+    name: Lint & tests
+    uses: Jack-s-Cave/.github/.github/workflows/code-quality.yml@main
+    with:
+      enforce: false   # cambiar a true para imponerlo
