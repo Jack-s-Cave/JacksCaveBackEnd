@@ -66,6 +66,12 @@
         "#python",
         "#Software"
       ]
+    },
+    "serie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::serie.serie",
+      "inversedBy": "articles"
     }
   }
 }

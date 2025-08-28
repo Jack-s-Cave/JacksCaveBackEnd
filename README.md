@@ -417,7 +417,80 @@ GET /articles
 
 ---
 
+### 2.5  Get blogs by serie
 
+#### title
+```http
+GET /articles
+      ?filters[serie][name][$eq]=focas
+      &populate[media][fields][0]=url
+      &populate[author_profile][fields][0]=nombre
+      &populate[author_profile][fields][1]=bio
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 4,
+      "documentId": "vdjxbvc3rm4latjwulz5opqm",
+      "title": "Por que explorer solo lo usamos para descargar otro navegador",
+      "information": "Internet Explorer (IE) terminó convertido en “el navegador para descargar navegadores” por la combinación de tres factores clave:\n\nEstancamiento tecnológico prolongado\nDespués de la versión 6 (2001), IE evolucionó muy lentamente. Mientras Firefox, Chrome y Opera incorporaban pestañas, motores JavaScript rápidos, extensiones y actualizaciones automáticas, IE seguía con un motor propietario (Trident) poco compatible con los nuevos estándares web. Resultado: muchas páginas modernas simplemente “no se veían bien” o funcionaban mejor en otros navegadores.\n\nSeguridad y confianza del usuario\nLas vulnerabilidades de IE se hicieron famosas: ActiveX, barras de herramientas invasivas y fallos críticos requerían parches constantes. La percepción de inseguridad empujó a la mayoría a instalar un navegador alternativo tan pronto como abrían Windows por primera vez, para navegar con menos riesgo y más privacidad.\n\nCambio de estrategia de Microsoft y el ecosistema web\nCon la llegada de Edge (Chromium) y el fin del soporte oficial de IE 11 (2022), Microsoft declaró obsoleto su propio navegador clásico. Los sitios corporativos heredados se quedaron con “modo IE” dentro de Edge, y el público general lo vio definitivamente como una herramienta de transición: se usa cinco minutos, se instala Chrome/Firefox/Brave, y nunca más se vuelve a abrir.\n\nEn conjunto, la falta de innovación, los problemas de seguridad y la propia decisión de Microsoft de jubilarlo convirtieron a Internet Explorer en un simple escalón inicial para obtener un navegador más rápido, seguro y compatible.",
+      "createdAt": "2025-06-26T18:38:57.359Z",
+      "updatedAt": "2025-06-26T18:38:57.359Z",
+      "publishedAt": "2025-06-26T18:38:58.923Z",
+      "locale": "en",
+      "tags": null,
+      "media": null,
+      "author_profile": {
+        "id": 2,
+        "documentId": "se4xav3gcmgrockwj7jxqdoa",
+        "nombre": "Sebastian Huertas",
+        "bio": "Sebastian huertas es un profile de ejemplo "
+      }
+    },
+    {
+      "id": 6,
+      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
+      "title": "Focas embarazadas",
+      "information": "Esto es de prueba",
+      "createdAt": "2025-08-25T18:08:47.615Z",
+      "updatedAt": "2025-08-25T18:08:47.615Z",
+      "publishedAt": "2025-08-25T18:08:50.397Z",
+      "locale": "en",
+      "tags": null,
+      "media": [
+        {
+          "id": 4,
+          "documentId": "zbh59ufvidy20svn59gtbso1",
+          "url": "/uploads/deskopt_c6531a27ea.jpg"
+        }
+      ],
+      "author_profile": {
+        "id": 2,
+        "documentId": "se4xav3gcmgrockwj7jxqdoa",
+        "nombre": "Sebastian Huertas",
+        "bio": "Sebastian huertas es un profile de ejemplo "
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
+  }
+}
+```
+
+</details>
+
+---
 
 
 ## 3 · Podcast episodes

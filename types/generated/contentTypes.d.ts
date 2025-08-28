@@ -415,6 +415,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         };
       }>;
     publishedAt: Schema.Attribute.DateTime;
+    serie: Schema.Attribute.Relation<'manyToOne', 'api::serie.serie'>;
     tags: Schema.Attribute.Enumeration<['#linux', '#python', '#Software']> &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
@@ -514,6 +515,7 @@ export interface ApiAuthorProfileAuthorProfile
       Schema.Attribute.Private;
     nombre: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    series: Schema.Attribute.Relation<'oneToMany', 'api::serie.serie'>;
     social_media: Schema.Attribute.JSON;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -631,6 +633,42 @@ export interface ApiPodcastPodcast extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSerieSerie extends Struct.CollectionTypeSchema {
+  collectionName: 'series';
+  info: {
+    displayName: 'Serie';
+    pluralName: 'series';
+    singularName: 'serie';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::serie.serie'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1151,6 +1189,7 @@ declare module '@strapi/strapi' {
       'api::author-profile.author-profile': ApiAuthorProfileAuthorProfile;
       'api::podcast-crew.podcast-crew': ApiPodcastCrewPodcastCrew;
       'api::podcast.podcast': ApiPodcastPodcast;
+      'api::serie.serie': ApiSerieSerie;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -37,6 +37,14 @@ GET http://localhost:1337/api/articles
   &populate[author_profile][fields][1]=bio
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
+# Get all articles of a serie
+GET http://localhost:1337/api/articles
+  ?filters[serie][name][$eq]=focas
+  &populate[media][fields][0]=url
+  &populate[author_profile][fields][0]=nombre
+  &populate[author_profile][fields][1]=bio
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
 # Get all Podcast
 GET http://localhost:1337/api/podcasts?populate[image][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
