@@ -16,3 +16,4 @@ jobs:
     uses: Jack-s-Cave/.github/.github/workflows/commitlint.yml@main
     with:
       strict: true
+      check_pr_title: true
