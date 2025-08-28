@@ -358,6 +358,44 @@ GET /podcast-crew?populate[photos][fields][0]=url
 ---
 
 
+## 5. Associations
+### 5.1 Get One association per year
+```http
+GET /associations?filters[year][$eq]=2025
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "documentId": "y0wo14ws3weh4zpcx89l9yv7",
+      "createdAt": "2025-08-28T00:07:16.324Z",
+      "updatedAt": "2025-08-28T00:07:16.324Z",
+      "publishedAt": "2025-08-28T00:07:16.223Z",
+      "locale": "en",
+      "description": "somos la asociacion de 2025",
+      "members": {
+        "Vocal": "Angela",
+        "Presidente": "Gerardo Pineda"
+      },
+      "year": "2025"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
 ## 📚 Learn more
 
 - [Resource center](https://strapi.io/resource-center) - Strapi resource center.

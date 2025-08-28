@@ -52,6 +52,14 @@
       "relation": "manyToOne",
       "target": "api::author-profile.author-profile",
       "inversedBy": "articles"
+    },
+    "as": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

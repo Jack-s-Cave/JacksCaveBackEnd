@@ -25,3 +25,7 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 # Get podcast crew
 GET http://localhost:1337/api/podcast-crew?populate[photos][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get specific association
+GET http://localhost:1337/api/associations?filters[year][$eq]=2025
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
