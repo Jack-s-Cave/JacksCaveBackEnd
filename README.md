@@ -137,9 +137,9 @@ GET /author-profiles?filters[id][$eq]=2&populate[foto][fields][0]=url
 
 ---
 
-## 2 · Articles
+## 2 · BLOGS
 
-### 2.1  Get **all** articles (+ media URL)
+### 2.1  Get **all** Blogs (+ media URL)
 
 ```http
 GET /articles?populate[media][fields][0]=url
@@ -181,7 +181,7 @@ GET /articles?populate[media][fields][0]=url
 
 ---
 
-### 2.2  Get **all** articles authored by a given profile
+### 2.2  Get **all** Blogs authored by a given profile
 
 ```http
 GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url&populate[author_profile][fields][0]=nombre&populate[author_profile][fields][1]=bio
@@ -225,7 +225,7 @@ GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url&
 
 ---
 
-### 2.3  Get **recents** articles (6)
+### 2.3  Get **recents** Blogs (6)
 
 ```http
 GET /articles
@@ -305,7 +305,7 @@ GET /articles
 
 ---
 
-### 2.4  Get **one** article
+### 2.4  Get **one** Blogs
 
 ```http
 GET /articles?filters[id][$eq]=6
@@ -359,6 +359,65 @@ GET /articles?filters[id][$eq]=6
 </details>
 
 ---
+
+### 2.5  Get blogs with filter
+
+#### title
+```http
+GET /articles
+      ?filters[title][$eq]=Focas%20embarazadas
+      &populate[media][fields][0]=url
+      &populate[author_profile][fields][0]=nombre
+      &populate[author_profile][fields][1]=bio
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 6,
+      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
+      "title": "Focas embarazadas",
+      "information": "Esto es de prueba",
+      "createdAt": "2025-08-25T18:08:47.615Z",
+      "updatedAt": "2025-08-25T18:08:47.615Z",
+      "publishedAt": "2025-08-25T18:08:50.397Z",
+      "locale": "en",
+      "tags": null,
+      "media": [
+        {
+          "id": 4,
+          "documentId": "zbh59ufvidy20svn59gtbso1",
+          "url": "/uploads/deskopt_c6531a27ea.jpg"
+        }
+      ],
+      "author_profile": {
+        "id": 2,
+        "documentId": "se4xav3gcmgrockwj7jxqdoa",
+        "nombre": "Sebastian Huertas",
+        "bio": "Sebastian huertas es un profile de ejemplo "
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+
 
 
 ## 3 · Podcast episodes
