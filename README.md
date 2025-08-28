@@ -723,6 +723,74 @@ GET /associations?filters[year][$eq]=2025
 }
 ```
 
+## 6 Series
+### 6.1 Get ***all*** series
+```http
+GET /series
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "u0t51ceg5dxw1yv7su4t2a3m",
+      "createdAt": "2025-08-28T03:44:15.207Z",
+      "updatedAt": "2025-08-28T03:44:15.207Z",
+      "publishedAt": "2025-08-28T03:44:14.853Z",
+      "locale": "en",
+      "name": "focas"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+---
+
+### 6.2 Get ***all*** series
+```http
+GET /series?filter[id][$eq]=1
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "documentId": "u0t51ceg5dxw1yv7su4t2a3m",
+      "createdAt": "2025-08-28T03:44:15.207Z",
+      "updatedAt": "2025-08-28T03:44:15.207Z",
+      "publishedAt": "2025-08-28T03:44:14.853Z",
+      "locale": "en",
+      "name": "focas"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+---
+
+
 ## 📚 Learn more
 
 - [Resource center](https://strapi.io/resource-center) - Strapi resource center.
