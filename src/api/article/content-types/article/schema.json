@@ -53,13 +53,19 @@
       "target": "api::author-profile.author-profile",
       "inversedBy": "articles"
     },
-    "as": {
-      "type": "string",
+    "tags": {
+      "type": "enumeration",
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
-      }
+      },
+      "required": true,
+      "enum": [
+        "#linux",
+        "#python",
+        "#Software"
+      ]
     }
   }
 }

@@ -10,6 +10,14 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 GET http://localhost:1337/api/articles?populate[media][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
+# Get the most recent articles (6)
+GET http://localhost:1337/api/articles
+  ?sort[0]=createdAt:desc
+  &pagination[page]=1
+  &pagination[pageSize]=6
+  &populate[media][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
 # Get all articles of one user
 GET http://localhost:1337/api/articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}

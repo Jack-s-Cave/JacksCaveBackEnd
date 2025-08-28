@@ -215,6 +215,86 @@ GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 
 ---
 
+### 2.3  Get **recent** articles (6)
+
+```http
+GET /articles
+      ?sort[0]=createdAt:desc
+      &pagination[page]=1
+      &pagination[pageSize]=6
+      &populate[media][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 6,
+      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
+      "title": "Focas embarazadas",
+      "information": "Esto es de prueba",
+      "createdAt": "2025-08-25T18:08:47.615Z",
+      "updatedAt": "2025-08-25T18:08:47.615Z",
+      "publishedAt": "2025-08-25T18:08:50.397Z",
+      "locale": "en",
+      "tags": null,
+      "media": [
+        {
+          "id": 4,
+          "documentId": "zbh59ufvidy20svn59gtbso1",
+          "url": "/uploads/deskopt_c6531a27ea.jpg"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "documentId": "vdjxbvc3rm4latjwulz5opqm",
+      "title": "Por que explorer solo lo usamos para descargar otro navegador",
+      "information": "Internet Explorer (IE) terminó convertido en “el navegador para descargar navegadores” por la combinación de tres factores clave:\n\nEstancamiento tecnológico prolongado\nDespués de la versión 6 (2001), IE evolucionó muy lentamente. Mientras Firefox, Chrome y Opera incorporaban pestañas, motores JavaScript rápidos, extensiones y actualizaciones automáticas, IE seguía con un motor propietario (Trident) poco compatible con los nuevos estándares web. Resultado: muchas páginas modernas simplemente “no se veían bien” o funcionaban mejor en otros navegadores.\n\nSeguridad y confianza del usuario\nLas vulnerabilidades de IE se hicieron famosas: ActiveX, barras de herramientas invasivas y fallos críticos requerían parches constantes. La percepción de inseguridad empujó a la mayoría a instalar un navegador alternativo tan pronto como abrían Windows por primera vez, para navegar con menos riesgo y más privacidad.\n\nCambio de estrategia de Microsoft y el ecosistema web\nCon la llegada de Edge (Chromium) y el fin del soporte oficial de IE 11 (2022), Microsoft declaró obsoleto su propio navegador clásico. Los sitios corporativos heredados se quedaron con “modo IE” dentro de Edge, y el público general lo vio definitivamente como una herramienta de transición: se usa cinco minutos, se instala Chrome/Firefox/Brave, y nunca más se vuelve a abrir.\n\nEn conjunto, la falta de innovación, los problemas de seguridad y la propia decisión de Microsoft de jubilarlo convirtieron a Internet Explorer en un simple escalón inicial para obtener un navegador más rápido, seguro y compatible.",
+      "createdAt": "2025-06-26T18:38:57.359Z",
+      "updatedAt": "2025-06-26T18:38:57.359Z",
+      "publishedAt": "2025-06-26T18:38:58.923Z",
+      "locale": "en",
+      "tags": null,
+      "media": null
+    },
+    {
+      "id": 2,
+      "documentId": "p0zemt7wo0isc6r0hv3guuou",
+      "title": "Por que las focas son focas ",
+      "information": "Las focas son “focas” porque cumplen un conjunto de criterios biológicos y evolutivos que las sitúan dentro de la familia Phocidae (focas verdaderas) en el orden Carnivora. A grandes rasgos, esto se debe a tres factores esenciales:\n\nLínea evolutiva común\nTodas las focas verdaderas descienden de un antepasado terrestre parecido a una nutria que, hace unos 20-25 millones de años, regresó al mar. Esa rama evolutiva acumula adaptaciones específicas (aletas posteriores orientadas hacia atrás, ausencia de pabellones auriculares externos, patrón dental especializado) que las distingue de otros pinnípedos como lobos y leones marinos (familia Otariidae).\n\nConjunto de rasgos morfológicos únicos\n\nLocomoción: usan principalmente las aletas posteriores para impulsarse bajo el agua y se desplazan en tierra “reptando”, a diferencia de los otáridos, que rotan sus aletas delanteras para caminar.\n\nEstructura ósea: cráneo y sistema respiratorio diseñados para inmersiones profundas y prolongadas.\n\nCapa de grasa (grueso panículo adiposo): aislante térmico y reserva energética que permite habitar aguas frías.\n\nEcología y comportamiento compartidos\nComparten estrategias de caza (pesca submarina sigilosa), ciclos de muda y reproducción sobre hielo o playas aisladas, y un sistema de comunicación principalmente vocal bajo el agua. Estos patrones de vida refuerzan su identidad filogenética y mantienen la cohesión del grupo.\n\nEn suma, las focas son focas porque comparten una genealogía clara, un paquete consistente de características anatómico-fisiológicas y un nicho ecológico parecido; esa combinación las agrupa científicamente como un linaje diferenciado dentro de los mamíferos marinos.",
+      "createdAt": "2025-06-26T18:37:25.779Z",
+      "updatedAt": "2025-06-26T18:37:25.779Z",
+      "publishedAt": "2025-06-26T18:37:27.769Z",
+      "locale": "en",
+      "tags": null,
+      "media": [
+        {
+          "id": 2,
+          "documentId": "v523h1ahq3mq01uawb12xbmx",
+          "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 6,
+      "pageCount": 1,
+      "total": 3
+    }
+  }
+}
+```
+
+</details>
+
+---
+
 ## 3 · Podcast episodes
 
 ### 3.1  Get **all** podcast episodes (+ media URL)
@@ -304,6 +384,7 @@ GET /podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
 </details>
 
 ---
+
 ## 4 · Podcast crew
 
 ### 4.1  Get **all** podcast crew (+ media URL)
