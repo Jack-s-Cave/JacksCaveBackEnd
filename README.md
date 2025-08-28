@@ -184,7 +184,7 @@ GET /articles?populate[media][fields][0]=url
 ### 2.2  Get **all** articles authored by a given profile
 
 ```http
-GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
+GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url&populate[author_profile][fields][0]=nombre&populate[author_profile][fields][1]=bio
 ```
 
 <details>
@@ -195,19 +195,29 @@ GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
   "data": [
     {
       "id": 2,
-      "attributes": {
-        "title": "Por que las focas son focas",
-        "media": [
-          {
-            "attributes": {
-              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
-            }
-          }
-        ]
+      "documentId": "p0zemt7wo0isc6r0hv3guuou",
+      "title": "Por que las focas son focas ",
+      "information": "Las focas son “focas” porque cumplen un conjunto de criterios biológicos y evolutivos que las sitúan dentro de la familia Phocidae (focas verdaderas) en el orden Carnivora. A grandes rasgos, esto se debe a tres factores esenciales:\n\nLínea evolutiva común\nTodas las focas verdaderas descienden de un antepasado terrestre parecido a una nutria que, hace unos 20-25 millones de años, regresó al mar. Esa rama evolutiva acumula adaptaciones específicas (aletas posteriores orientadas hacia atrás, ausencia de pabellones auriculares externos, patrón dental especializado) que las distingue de otros pinnípedos como lobos y leones marinos (familia Otariidae).\n\nConjunto de rasgos morfológicos únicos\n\nLocomoción: usan principalmente las aletas posteriores para impulsarse bajo el agua y se desplazan en tierra “reptando”, a diferencia de los otáridos, que rotan sus aletas delanteras para caminar.\n\nEstructura ósea: cráneo y sistema respiratorio diseñados para inmersiones profundas y prolongadas.\n\nCapa de grasa (grueso panículo adiposo): aislante térmico y reserva energética que permite habitar aguas frías.\n\nEcología y comportamiento compartidos\nComparten estrategias de caza (pesca submarina sigilosa), ciclos de muda y reproducción sobre hielo o playas aisladas, y un sistema de comunicación principalmente vocal bajo el agua. Estos patrones de vida refuerzan su identidad filogenética y mantienen la cohesión del grupo.\n\nEn suma, las focas son focas porque comparten una genealogía clara, un paquete consistente de características anatómico-fisiológicas y un nicho ecológico parecido; esa combinación las agrupa científicamente como un linaje diferenciado dentro de los mamíferos marinos.",
+      "createdAt": "2025-06-26T18:37:25.779Z",
+      "updatedAt": "2025-06-26T18:37:25.779Z",
+      "publishedAt": "2025-06-26T18:37:27.769Z",
+      "locale": "en",
+      "tags": null,
+      "media": [
+        {
+          "id": 2,
+          "documentId": "v523h1ahq3mq01uawb12xbmx",
+          "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+        }
+      ],
+      "author_profile": {
+        "id": 2,
+        "documentId": "se4xav3gcmgrockwj7jxqdoa",
+        "nombre": "Sebastian Huertas",
+        "bio": "Sebastian huertas es un profile de ejemplo "
       }
-    }
-  ],
-  "meta": { "pagination": { "total": 1 } }
+    },
+  ]
 }
 ```
 
@@ -294,6 +304,62 @@ GET /articles
 </details>
 
 ---
+
+### 2.4  Get **one** article
+
+```http
+GET /articles?filters[id][$eq]=6
+      &populate[media][fields][0]=url
+      &populate[author_profile][fields][0]=nombre
+      &populate[author_profile][fields][1]=bio
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 6,
+      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
+      "title": "Focas embarazadas",
+      "information": "Esto es de prueba",
+      "createdAt": "2025-08-25T18:08:47.615Z",
+      "updatedAt": "2025-08-25T18:08:47.615Z",
+      "publishedAt": "2025-08-25T18:08:50.397Z",
+      "locale": "en",
+      "tags": null,
+      "media": [
+        {
+          "id": 4,
+          "documentId": "zbh59ufvidy20svn59gtbso1",
+          "url": "/uploads/deskopt_c6531a27ea.jpg"
+        }
+      ],
+      "author_profile": {
+        "id": 2,
+        "documentId": "se4xav3gcmgrockwj7jxqdoa",
+        "nombre": "Sebastian Huertas",
+        "bio": "Sebastian huertas es un profile de ejemplo "
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</details>
+
+---
+
 
 ## 3 · Podcast episodes
 
