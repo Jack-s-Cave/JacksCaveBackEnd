@@ -1,0 +1,13 @@
+name: branch-source
+on:
+  pull_request:
+    branches: 
+    - main
+    - develop 
+    types: [opened, reopened, synchronize, edited]
+
+jobs:
+  branch-source:
+    # Llamar al worflow reutilizable de la organizacion
+    uses: Jack-s-Cave/.github/.github/workflows/branch-source.yml@main
+    secrets: inherit
