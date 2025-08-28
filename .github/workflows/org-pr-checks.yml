@@ -1,0 +1,18 @@
+name: Org PR Checks
+on:
+  pull_request:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+jobs:
+  branch-source:
+    name: Branch source rules
+    uses: Jack-s-Cave/.github/.github/workflows/branch-source.yml@main
+
+  commitlint:
+    name: Commit message lint
+    uses: Jack-s-Cave/.github/.github/workflows/commitlint.yml@main
+    with:
+      strict: true
