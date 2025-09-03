@@ -1,10 +1,11 @@
 name: Org PR Checks
 on:
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop] # Aplica a las ramas principales
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   branch-source:
@@ -12,8 +13,8 @@ jobs:
     uses: Jack-s-Cave/.github/.github/workflows/branch-source.yml@main
 
   commitlint:
-    name: Commit message lint
-    uses: Jack-s-Cave/.github/.github/workflows/commitlint.yml@main
+    name: Commit message lint (PR)
+    uses: Jack-s-Cave/.github/.github/workflows/commitlint-on-pr.yml@main
     with:
       strict: true
       check_pr_title: true

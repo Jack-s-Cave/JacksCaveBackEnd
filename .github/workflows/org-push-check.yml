@@ -1,0 +1,10 @@
+name: Org Push Checks
+
+on:
+    push:
+        branches: ['**'] # Aplica a todas las ramas
+
+jobs:
+    commitlint:
+        name: Commit message lint (push)
+        uses: Jack-s-Cave/.github/.github/workflows/commitlint-on-push.yml@main
