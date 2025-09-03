@@ -1,1 +1,2 @@
-npx --no -- commitlint --edit "$i"
+# Ejecuta commitlint con el binario local (universal para Win/Mac/Linux)
+node ./node_modules/@commitlint/cli/cli.js --edit "$1"
