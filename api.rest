@@ -25,3 +25,19 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 # Get podcast crew
 GET http://localhost:1337/api/podcast-crew?populate[photos][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all asociaciones (básico - sin components)
+GET http://localhost:1337/api/asociaciones
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all asociaciones CON miembros y fotos
+GET http://localhost:1337/api/asociaciones?populate[Miembro][populate][foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get asociación por año específico CON miembros y fotos
+GET http://localhost:1337/api/asociaciones?filters[year][$eq]=2024&populate[Miembro][populate][foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get asociaciones ordenadas por año descendente
+GET http://localhost:1337/api/asociaciones?sort[0]=year:desc&populate[Miembro][populate][foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}

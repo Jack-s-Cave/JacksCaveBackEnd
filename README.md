@@ -355,6 +355,334 @@ GET /podcast-crew?populate[photos][fields][0]=url
 
 </details>
 
+# 5 · Asociaciones
+
+La colección **Asociaciones** representa las juntas directivas por año académico, donde cada asociación contiene múltiples miembros con sus respectivos cargos.
+
+## Estructura de datos
+
+### Asociación
+- `year`: Año de la asociación (integer)
+- `Miembro`: Componente repetible con los datos de cada miembro
+
+### Componente Miembro
+- `nombre`: Nombre del miembro (string)
+- `Cargo`: Puesto en la asociación (enum)
+  - Presidente
+  - Vicepresidente  
+  - Secretario
+  - Tesorero
+  - Vocal
+  - Representante
+- `year_estudiante`: Año académico del miembro (enum)
+  - Primer año
+  - Segundo año
+  - Tercer año
+  - Cuarto año
+  - Quinto año
+- `foto`: Imagen del miembro (media)
+- `curriculum`: Biografía/experiencia del miembro (text)
+
+---
+
+## 5.1 · Get **todas** las asociaciones (básico)
+
+```http
+GET /asociaciones
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z",
+        "publishedAt": "2025-01-15T10:00:00.000Z"
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "year": 2023,
+        "createdAt": "2024-01-15T10:00:00.000Z",
+        "updatedAt": "2024-01-15T10:00:00.000Z",
+        "publishedAt": "2024-01-15T10:00:00.000Z"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+## 5.2 · Get **todas** las asociaciones con miembros y fotos
+
+```http
+GET /asociaciones?populate[Miembro][populate][foto][fields][0]=url
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z",
+        "publishedAt": "2025-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 1,
+            "nombre": "Ana García",
+            "Cargo": "Presidente",
+            "year_estudiante": "Cuarto año",
+            "curriculum": "Estudiante destacada con experiencia en liderazgo estudiantil...",
+            "foto": {
+              "data": {
+                "id": 5,
+                "attributes": {
+                  "url": "/uploads/ana_garcia_president_2024.jpg"
+                }
+              }
+            }
+          },
+          {
+            "id": 2,
+            "nombre": "Carlos López",
+            "Cargo": "Vicepresidente", 
+            "year_estudiante": "Tercer año",
+            "curriculum": "Especializado en desarrollo web y coordinación de eventos...",
+            "foto": {
+              "data": {
+                "id": 6,
+                "attributes": {
+                  "url": "/uploads/carlos_lopez_vice_2024.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+## 5.3 · Get asociación por **año específico** con miembros y fotos
+
+```http
+GET /asociaciones?filters[year][$eq]=2024&populate[Miembro][populate][foto][fields][0]=url
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z", 
+        "publishedAt": "2025-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 1,
+            "nombre": "Ana García",
+            "Cargo": "Presidente",
+            "year_estudiante": "Cuarto año",
+            "curriculum": "Estudiante destacada con experiencia en liderazgo estudiantil y coordinación de proyectos académicos.",
+            "foto": {
+              "data": {
+                "id": 5,
+                "attributes": {
+                  "url": "/uploads/ana_garcia_president_2024.jpg"
+                }
+              }
+            }
+          },
+          {
+            "id": 2,
+            "nombre": "Carlos López",
+            "Cargo": "Vicepresidente",
+            "year_estudiante": "Tercer año", 
+            "curriculum": "Especializado en desarrollo web y coordinación de eventos estudiantiles.",
+            "foto": {
+              "data": {
+                "id": 6,
+                "attributes": {
+                  "url": "/uploads/carlos_lopez_vice_2024.jpg"
+                }
+              }
+            }
+          },
+          {
+            "id": 3,
+            "nombre": "María Rodríguez",
+            "Cargo": "Secretario",
+            "year_estudiante": "Segundo año",
+            "curriculum": "Encargada de documentación y comunicación interna de la asociación.",
+            "foto": {
+              "data": {
+                "id": 7,
+                "attributes": {
+                  "url": "/uploads/maria_rodriguez_secretary_2024.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+## 5.4 · Get asociaciones **ordenadas por año** (descendente) con miembros y fotos
+
+```http
+GET /asociaciones?sort[0]=year:desc&populate[Miembro][populate][foto][fields][0]=url
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z",
+        "publishedAt": "2025-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 1,
+            "nombre": "Ana García",
+            "Cargo": "Presidente",
+            "year_estudiante": "Cuarto año",
+            "curriculum": "Estudiante destacada con experiencia en liderazgo estudiantil...",
+            "foto": {
+              "data": {
+                "id": 5,
+                "attributes": {
+                  "url": "/uploads/ana_garcia_president_2024.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "year": 2023,
+        "createdAt": "2024-01-15T10:00:00.000Z",
+        "updatedAt": "2024-01-15T10:00:00.000Z",
+        "publishedAt": "2024-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 4,
+            "nombre": "Pedro Martínez",
+            "Cargo": "Presidente",
+            "year_estudiante": "Quinto año",
+            "curriculum": "Ex-presidente con amplia experiencia en gestión estudiantil...",
+            "foto": {
+              "data": {
+                "id": 8,
+                "attributes": {
+                  "url": "/uploads/pedro_martinez_president_2023.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
+  }
+}
+```
+
+</details>
+
+
+---
+
+## ⚙️ Configuración adicional recomendada
+
+Para optimizar el rendimiento y funcionalidad, considera:
+
+1. **Índices en base de datos**: Agregar índice en el campo `year` para consultas más rápidas
+2. **Validaciones**: Implementar validación para evitar años duplicados
+3. **Permisos**: Configurar roles de usuario apropiados para CRUD operations
+4. **Paginación**: Para asociaciones con muchos miembros, considera pagination en el frontend
+
+---
+
+## 🔒 Autenticación
+
+Todos los endpoints requieren autenticación Bearer token:
+
+```http
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+```
 ---
 
 
@@ -376,4 +704,3 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>

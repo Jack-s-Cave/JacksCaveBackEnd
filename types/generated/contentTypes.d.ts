@@ -428,6 +428,35 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAsociacionAsociacion extends Struct.CollectionTypeSchema {
+  collectionName: 'asociaciones';
+  info: {
+    displayName: 'Asociacion ';
+    pluralName: 'asociaciones';
+    singularName: 'asociacion';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::asociacion.asociacion'
+    > &
+      Schema.Attribute.Private;
+    Miembro: Schema.Attribute.Component<'asociacion.miembros', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    year: Schema.Attribute.Integer;
+  };
+}
+
 export interface ApiAuthorProfileAuthorProfile
   extends Struct.CollectionTypeSchema {
   collectionName: 'author_profiles';
@@ -1088,6 +1117,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
+      'api::asociacion.asociacion': ApiAsociacionAsociacion;
       'api::author-profile.author-profile': ApiAuthorProfileAuthorProfile;
       'api::podcast-crew.podcast-crew': ApiPodcastCrewPodcastCrew;
       'api::podcast.podcast': ApiPodcastPodcast;
