@@ -790,6 +790,50 @@ GET /series?filter[id][$eq]=1
 ```
 ---
 
+## 7 News
+### 7.1 Get ***recent*** news
+```http
+GET /informations
+  ?sort[0]=date:desc
+  &pagination[page]=1
+  &pagination[pageSize]=3
+  &populate[photo][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "documentId": "mukp3s1esck2h68sqhcyablw",
+      "createdAt": "2025-09-08T03:24:57.269Z",
+      "updatedAt": "2025-09-08T03:24:57.269Z",
+      "publishedAt": "2025-09-08T03:24:58.331Z",
+      "title": "Intercambio a alemania",
+      "author": "la aso",
+      "date": "2025-08-12",
+      "photo_description": "focas",
+      "photo": {
+        "id": 2,
+        "documentId": "v523h1ahq3mq01uawb12xbmx",
+        "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 3,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+---
 
 ## 📚 Learn more
 
