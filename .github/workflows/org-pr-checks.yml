@@ -1,0 +1,26 @@
+name: Org PR Checks
+on:
+  pull_request:
+    branches: [main, develop] # Aplica a las ramas principales
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  branch-source:
+    name: Branch source rules
+    uses: Jack-s-Cave/.github/.github/workflows/branch-source.yml@main
+
+  commitlint:
+    name: Commit message lint (PR)
+    uses: Jack-s-Cave/.github/.github/workflows/commitlint-on-pr.yml@main
+    with:
+      strict: true
+      check_pr_title: true
+      
+  code-quality:
+    name: Lint & tests
+    uses: Jack-s-Cave/.github/.github/workflows/code-quality.yml@main
+    with:
+      enforce: false   # cambiar a true para imponerlo
