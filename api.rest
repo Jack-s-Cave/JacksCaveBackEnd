@@ -14,6 +14,10 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 GET http://localhost:1337/api/articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
+# Get all articles of the "focas" series
+GET http://localhost:1337/api/articles?filters[serie][slug][$eq]=focas&populate[media][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
 # Get all Podcast
 GET http://localhost:1337/api/podcasts?populate[image][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}

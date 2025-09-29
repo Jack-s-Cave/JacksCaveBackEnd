@@ -7,7 +7,48 @@ npm install
 yarn install
 ```
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI)---
+
+### 2.3  Get **all** articles of a given series
+
+```http
+GET /articles?filters[serie][slug][$eq]=focas&populate[media][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Por que las focas son focas",
+        "content": "Las focas son mamíferos marinos...",
+        "createdAt": "2025-07-12T22:00:00.000Z",
+        "updatedAt": "2025-07-12T22:00:00.000Z",
+        "publishedAt": "2025-07-12T22:00:00.000Z",
+        "media": [
+          {
+            "id": 2,
+            "attributes": {
+              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": { "pagination": { "total": 1 } }
+}
+```
+
+</details>
+
+---
+
+## 3 · Podcast episodesich lets you scaffold and manage your project in seconds.
 
 ### `develop`
 

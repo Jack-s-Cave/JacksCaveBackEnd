@@ -52,6 +52,12 @@
       "relation": "manyToOne",
       "target": "api::author-profile.author-profile",
       "inversedBy": "articles"
+    },
+    "serie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::serie.serie",
+      "inversedBy": "articles"
     }
   }
 }
