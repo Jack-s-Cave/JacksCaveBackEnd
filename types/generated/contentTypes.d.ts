@@ -416,6 +416,13 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       }>;
     publishedAt: Schema.Attribute.DateTime;
     serie: Schema.Attribute.Relation<'manyToOne', 'api::serie.serie'>;
+    tags: Schema.Attribute.Enumeration<['#linux', '#python', '#Software']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
@@ -429,32 +436,55 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAsociacionAsociacion extends Struct.CollectionTypeSchema {
-  collectionName: 'asociaciones';
+export interface ApiAssociationAssociation extends Struct.CollectionTypeSchema {
+  collectionName: 'associations';
   info: {
-    displayName: 'Asociacion ';
-    pluralName: 'asociaciones';
-    singularName: 'asociacion';
+    displayName: 'Association';
+    pluralName: 'associations';
+    singularName: 'association';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::asociacion.asociacion'
-    > &
-      Schema.Attribute.Private;
-    Miembro: Schema.Attribute.Component<'asociacion.miembros', true>;
+      'api::association.association'
+    >;
+    members: Schema.Attribute.JSON &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    year: Schema.Attribute.Integer;
+    year: Schema.Attribute.BigInteger &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
   };
 }
 
@@ -487,6 +517,38 @@ export interface ApiAuthorProfileAuthorProfile
     publishedAt: Schema.Attribute.DateTime;
     series: Schema.Attribute.Relation<'oneToMany', 'api::serie.serie'>;
     social_media: Schema.Attribute.JSON;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiInformationInformation extends Struct.CollectionTypeSchema {
+  collectionName: 'informations';
+  info: {
+    displayName: 'Information';
+    pluralName: 'informations';
+    singularName: 'information';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    author: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::information.information'
+    > &
+      Schema.Attribute.Private;
+    photo: Schema.Attribute.Media<'images'>;
+    photo_description: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -617,23 +679,28 @@ export interface ApiSerieSerie extends Struct.CollectionTypeSchema {
     singularName: 'serie';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
-    author_profile: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::author-profile.author-profile'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::serie.serie'> &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::serie.serie'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'name'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1150,8 +1217,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
-      'api::asociacion.asociacion': ApiAsociacionAsociacion;
+      'api::association.association': ApiAssociationAssociation;
       'api::author-profile.author-profile': ApiAuthorProfileAuthorProfile;
+      'api::information.information': ApiInformationInformation;
       'api::podcast-crew.podcast-crew': ApiPodcastCrewPodcastCrew;
       'api::podcast.podcast': ApiPodcastPodcast;
       'api::serie.serie': ApiSerieSerie;

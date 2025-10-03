@@ -7,22 +7,22 @@
     "displayName": "Serie"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "name": {
-      "type": "string"
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "name"
-    },
-    "author_profile": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::author-profile.author-profile",
-      "inversedBy": "series"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
     },
     "articles": {
       "type": "relation",
