@@ -53,6 +53,10 @@ GET http://localhost:1337/api/articles
   &populate[author_profile][fields][1]=bio
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
+# Get all articles of the "focas" series
+GET http://localhost:1337/api/articles?filters[serie][slug][$eq]=focas&populate[media][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
 # Get all Podcast
 GET http://localhost:1337/api/podcasts?populate[image][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
@@ -73,14 +77,18 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 GET http://localhost:1337/api/podcast-crew?populate[photos][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
-# Get specific association
-GET http://localhost:1337/api/associations?filters[year][$eq]=2025
+# Get all asociaciones (básico - sin components)
+GET http://localhost:1337/api/asociaciones
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
-# Get recent news
-GET http://localhost:1337/api/informations
-  ?sort[0]=date:desc
-  &pagination[page]=1
-  &pagination[pageSize]=3
-  &populate[photo][fields][0]=url
+# Get all asociaciones CON miembros y fotos
+GET http://localhost:1337/api/asociaciones?populate[Miembro][populate][foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get asociación por año específico CON miembros y fotos
+GET http://localhost:1337/api/asociaciones?filters[year][$eq]=2024&populate[Miembro][populate][foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get asociaciones ordenadas por año descendente
+GET http://localhost:1337/api/asociaciones?sort[0]=year:desc&populate[Miembro][populate][foto][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}

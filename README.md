@@ -7,7 +7,48 @@ npm install
 yarn install
 ```
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI)---
+
+### 2.3  Get **all** articles of a given series
+
+```http
+GET /articles?filters[serie][slug][$eq]=focas&populate[media][fields][0]=url
+```
+
+<details>
+<summary>Example response (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 2,
+      "attributes": {
+        "title": "Por que las focas son focas",
+        "content": "Las focas son mamíferos marinos...",
+        "createdAt": "2025-07-12T22:00:00.000Z",
+        "updatedAt": "2025-07-12T22:00:00.000Z",
+        "publishedAt": "2025-07-12T22:00:00.000Z",
+        "media": [
+          {
+            "id": 2,
+            "attributes": {
+              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": { "pagination": { "total": 1 } }
+}
+```
+
+</details>
+
+---
+
+## 3 · Podcast episodesich lets you scaffold and manage your project in seconds.
 
 ### `develop`
 
@@ -137,9 +178,9 @@ GET /author-profiles?filters[id][$eq]=2&populate[foto][fields][0]=url
 
 ---
 
-## 2 · BLOGS
+## 2 · Articles
 
-### 2.1  Get **all** Blogs (+ media URL)
+### 2.1  Get **all** articles (+ media URL)
 
 ```http
 GET /articles?populate[media][fields][0]=url
@@ -181,10 +222,10 @@ GET /articles?populate[media][fields][0]=url
 
 ---
 
-### 2.2  Get **all** Blogs authored by a given profile
+### 2.2  Get **all** articles authored by a given profile
 
 ```http
-GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url&populate[author_profile][fields][0]=nombre&populate[author_profile][fields][1]=bio
+GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
 ```
 
 <details>
@@ -195,303 +236,25 @@ GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url&
   "data": [
     {
       "id": 2,
-      "documentId": "p0zemt7wo0isc6r0hv3guuou",
-      "title": "Por que las focas son focas ",
-      "information": "Las focas son “focas” porque cumplen un conjunto de criterios biológicos y evolutivos que las sitúan dentro de la familia Phocidae (focas verdaderas) en el orden Carnivora. A grandes rasgos, esto se debe a tres factores esenciales:\n\nLínea evolutiva común\nTodas las focas verdaderas descienden de un antepasado terrestre parecido a una nutria que, hace unos 20-25 millones de años, regresó al mar. Esa rama evolutiva acumula adaptaciones específicas (aletas posteriores orientadas hacia atrás, ausencia de pabellones auriculares externos, patrón dental especializado) que las distingue de otros pinnípedos como lobos y leones marinos (familia Otariidae).\n\nConjunto de rasgos morfológicos únicos\n\nLocomoción: usan principalmente las aletas posteriores para impulsarse bajo el agua y se desplazan en tierra “reptando”, a diferencia de los otáridos, que rotan sus aletas delanteras para caminar.\n\nEstructura ósea: cráneo y sistema respiratorio diseñados para inmersiones profundas y prolongadas.\n\nCapa de grasa (grueso panículo adiposo): aislante térmico y reserva energética que permite habitar aguas frías.\n\nEcología y comportamiento compartidos\nComparten estrategias de caza (pesca submarina sigilosa), ciclos de muda y reproducción sobre hielo o playas aisladas, y un sistema de comunicación principalmente vocal bajo el agua. Estos patrones de vida refuerzan su identidad filogenética y mantienen la cohesión del grupo.\n\nEn suma, las focas son focas porque comparten una genealogía clara, un paquete consistente de características anatómico-fisiológicas y un nicho ecológico parecido; esa combinación las agrupa científicamente como un linaje diferenciado dentro de los mamíferos marinos.",
-      "createdAt": "2025-06-26T18:37:25.779Z",
-      "updatedAt": "2025-06-26T18:37:25.779Z",
-      "publishedAt": "2025-06-26T18:37:27.769Z",
-      "locale": "en",
-      "tags": null,
-      "media": [
-        {
-          "id": 2,
-          "documentId": "v523h1ahq3mq01uawb12xbmx",
-          "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
-        }
-      ],
-      "author_profile": {
-        "id": 2,
-        "documentId": "se4xav3gcmgrockwj7jxqdoa",
-        "nombre": "Sebastian Huertas",
-        "bio": "Sebastian huertas es un profile de ejemplo "
-      }
-    },
-  ]
-}
-```
-
-</details>
-
----
-
-### 2.3  Get **recents** Blogs (6)
-
-```http
-GET /articles
-      ?sort[0]=createdAt:desc
-      &pagination[page]=1
-      &pagination[pageSize]=6
-      &populate[media][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 6,
-      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
-      "title": "Focas embarazadas",
-      "information": "Esto es de prueba",
-      "createdAt": "2025-08-25T18:08:47.615Z",
-      "updatedAt": "2025-08-25T18:08:47.615Z",
-      "publishedAt": "2025-08-25T18:08:50.397Z",
-      "locale": "en",
-      "tags": null,
-      "media": [
-        {
-          "id": 4,
-          "documentId": "zbh59ufvidy20svn59gtbso1",
-          "url": "/uploads/deskopt_c6531a27ea.jpg"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "documentId": "vdjxbvc3rm4latjwulz5opqm",
-      "title": "Por que explorer solo lo usamos para descargar otro navegador",
-      "information": "Internet Explorer (IE) terminó convertido en “el navegador para descargar navegadores” por la combinación de tres factores clave:\n\nEstancamiento tecnológico prolongado\nDespués de la versión 6 (2001), IE evolucionó muy lentamente. Mientras Firefox, Chrome y Opera incorporaban pestañas, motores JavaScript rápidos, extensiones y actualizaciones automáticas, IE seguía con un motor propietario (Trident) poco compatible con los nuevos estándares web. Resultado: muchas páginas modernas simplemente “no se veían bien” o funcionaban mejor en otros navegadores.\n\nSeguridad y confianza del usuario\nLas vulnerabilidades de IE se hicieron famosas: ActiveX, barras de herramientas invasivas y fallos críticos requerían parches constantes. La percepción de inseguridad empujó a la mayoría a instalar un navegador alternativo tan pronto como abrían Windows por primera vez, para navegar con menos riesgo y más privacidad.\n\nCambio de estrategia de Microsoft y el ecosistema web\nCon la llegada de Edge (Chromium) y el fin del soporte oficial de IE 11 (2022), Microsoft declaró obsoleto su propio navegador clásico. Los sitios corporativos heredados se quedaron con “modo IE” dentro de Edge, y el público general lo vio definitivamente como una herramienta de transición: se usa cinco minutos, se instala Chrome/Firefox/Brave, y nunca más se vuelve a abrir.\n\nEn conjunto, la falta de innovación, los problemas de seguridad y la propia decisión de Microsoft de jubilarlo convirtieron a Internet Explorer en un simple escalón inicial para obtener un navegador más rápido, seguro y compatible.",
-      "createdAt": "2025-06-26T18:38:57.359Z",
-      "updatedAt": "2025-06-26T18:38:57.359Z",
-      "publishedAt": "2025-06-26T18:38:58.923Z",
-      "locale": "en",
-      "tags": null,
-      "media": null
-    },
-    {
-      "id": 2,
-      "documentId": "p0zemt7wo0isc6r0hv3guuou",
-      "title": "Por que las focas son focas ",
-      "information": "Las focas son “focas” porque cumplen un conjunto de criterios biológicos y evolutivos que las sitúan dentro de la familia Phocidae (focas verdaderas) en el orden Carnivora. A grandes rasgos, esto se debe a tres factores esenciales:\n\nLínea evolutiva común\nTodas las focas verdaderas descienden de un antepasado terrestre parecido a una nutria que, hace unos 20-25 millones de años, regresó al mar. Esa rama evolutiva acumula adaptaciones específicas (aletas posteriores orientadas hacia atrás, ausencia de pabellones auriculares externos, patrón dental especializado) que las distingue de otros pinnípedos como lobos y leones marinos (familia Otariidae).\n\nConjunto de rasgos morfológicos únicos\n\nLocomoción: usan principalmente las aletas posteriores para impulsarse bajo el agua y se desplazan en tierra “reptando”, a diferencia de los otáridos, que rotan sus aletas delanteras para caminar.\n\nEstructura ósea: cráneo y sistema respiratorio diseñados para inmersiones profundas y prolongadas.\n\nCapa de grasa (grueso panículo adiposo): aislante térmico y reserva energética que permite habitar aguas frías.\n\nEcología y comportamiento compartidos\nComparten estrategias de caza (pesca submarina sigilosa), ciclos de muda y reproducción sobre hielo o playas aisladas, y un sistema de comunicación principalmente vocal bajo el agua. Estos patrones de vida refuerzan su identidad filogenética y mantienen la cohesión del grupo.\n\nEn suma, las focas son focas porque comparten una genealogía clara, un paquete consistente de características anatómico-fisiológicas y un nicho ecológico parecido; esa combinación las agrupa científicamente como un linaje diferenciado dentro de los mamíferos marinos.",
-      "createdAt": "2025-06-26T18:37:25.779Z",
-      "updatedAt": "2025-06-26T18:37:25.779Z",
-      "publishedAt": "2025-06-26T18:37:27.769Z",
-      "locale": "en",
-      "tags": null,
-      "media": [
-        {
-          "id": 2,
-          "documentId": "v523h1ahq3mq01uawb12xbmx",
-          "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
-        }
-      ]
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 6,
-      "pageCount": 1,
-      "total": 3
-    }
-  }
-}
-```
-
-</details>
-
----
-
-### 2.4  Get **one** Blogs
-
-```http
-GET /articles?filters[id][$eq]=6
-      &populate[media][fields][0]=url
-      &populate[author_profile][fields][0]=nombre
-      &populate[author_profile][fields][1]=bio
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 6,
-      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
-      "title": "Focas embarazadas",
-      "information": "Esto es de prueba",
-      "createdAt": "2025-08-25T18:08:47.615Z",
-      "updatedAt": "2025-08-25T18:08:47.615Z",
-      "publishedAt": "2025-08-25T18:08:50.397Z",
-      "locale": "en",
-      "tags": null,
-      "media": [
-        {
-          "id": 4,
-          "documentId": "zbh59ufvidy20svn59gtbso1",
-          "url": "/uploads/deskopt_c6531a27ea.jpg"
-        }
-      ],
-      "author_profile": {
-        "id": 2,
-        "documentId": "se4xav3gcmgrockwj7jxqdoa",
-        "nombre": "Sebastian Huertas",
-        "bio": "Sebastian huertas es un profile de ejemplo "
+      "attributes": {
+        "title": "Por que las focas son focas",
+        "media": [
+          {
+            "attributes": {
+              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+            }
+          }
+        ]
       }
     }
   ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
+  "meta": { "pagination": { "total": 1 } }
 }
 ```
 
 </details>
 
 ---
-
-### 2.5  Get blogs with filter
-
-#### title
-```http
-GET /articles
-      ?filters[title][$eq]=Focas%20embarazadas
-      &populate[media][fields][0]=url
-      &populate[author_profile][fields][0]=nombre
-      &populate[author_profile][fields][1]=bio
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 6,
-      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
-      "title": "Focas embarazadas",
-      "information": "Esto es de prueba",
-      "createdAt": "2025-08-25T18:08:47.615Z",
-      "updatedAt": "2025-08-25T18:08:47.615Z",
-      "publishedAt": "2025-08-25T18:08:50.397Z",
-      "locale": "en",
-      "tags": null,
-      "media": [
-        {
-          "id": 4,
-          "documentId": "zbh59ufvidy20svn59gtbso1",
-          "url": "/uploads/deskopt_c6531a27ea.jpg"
-        }
-      ],
-      "author_profile": {
-        "id": 2,
-        "documentId": "se4xav3gcmgrockwj7jxqdoa",
-        "nombre": "Sebastian Huertas",
-        "bio": "Sebastian huertas es un profile de ejemplo "
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
-
-</details>
-
----
-
-### 2.5  Get blogs by serie
-
-#### title
-```http
-GET /articles
-      ?filters[serie][name][$eq]=focas
-      &populate[media][fields][0]=url
-      &populate[author_profile][fields][0]=nombre
-      &populate[author_profile][fields][1]=bio
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 4,
-      "documentId": "vdjxbvc3rm4latjwulz5opqm",
-      "title": "Por que explorer solo lo usamos para descargar otro navegador",
-      "information": "Internet Explorer (IE) terminó convertido en “el navegador para descargar navegadores” por la combinación de tres factores clave:\n\nEstancamiento tecnológico prolongado\nDespués de la versión 6 (2001), IE evolucionó muy lentamente. Mientras Firefox, Chrome y Opera incorporaban pestañas, motores JavaScript rápidos, extensiones y actualizaciones automáticas, IE seguía con un motor propietario (Trident) poco compatible con los nuevos estándares web. Resultado: muchas páginas modernas simplemente “no se veían bien” o funcionaban mejor en otros navegadores.\n\nSeguridad y confianza del usuario\nLas vulnerabilidades de IE se hicieron famosas: ActiveX, barras de herramientas invasivas y fallos críticos requerían parches constantes. La percepción de inseguridad empujó a la mayoría a instalar un navegador alternativo tan pronto como abrían Windows por primera vez, para navegar con menos riesgo y más privacidad.\n\nCambio de estrategia de Microsoft y el ecosistema web\nCon la llegada de Edge (Chromium) y el fin del soporte oficial de IE 11 (2022), Microsoft declaró obsoleto su propio navegador clásico. Los sitios corporativos heredados se quedaron con “modo IE” dentro de Edge, y el público general lo vio definitivamente como una herramienta de transición: se usa cinco minutos, se instala Chrome/Firefox/Brave, y nunca más se vuelve a abrir.\n\nEn conjunto, la falta de innovación, los problemas de seguridad y la propia decisión de Microsoft de jubilarlo convirtieron a Internet Explorer en un simple escalón inicial para obtener un navegador más rápido, seguro y compatible.",
-      "createdAt": "2025-06-26T18:38:57.359Z",
-      "updatedAt": "2025-06-26T18:38:57.359Z",
-      "publishedAt": "2025-06-26T18:38:58.923Z",
-      "locale": "en",
-      "tags": null,
-      "media": null,
-      "author_profile": {
-        "id": 2,
-        "documentId": "se4xav3gcmgrockwj7jxqdoa",
-        "nombre": "Sebastian Huertas",
-        "bio": "Sebastian huertas es un profile de ejemplo "
-      }
-    },
-    {
-      "id": 6,
-      "documentId": "gs2nxpkkemm8x20ig8z2ix0b",
-      "title": "Focas embarazadas",
-      "information": "Esto es de prueba",
-      "createdAt": "2025-08-25T18:08:47.615Z",
-      "updatedAt": "2025-08-25T18:08:47.615Z",
-      "publishedAt": "2025-08-25T18:08:50.397Z",
-      "locale": "en",
-      "tags": null,
-      "media": [
-        {
-          "id": 4,
-          "documentId": "zbh59ufvidy20svn59gtbso1",
-          "url": "/uploads/deskopt_c6531a27ea.jpg"
-        }
-      ],
-      "author_profile": {
-        "id": 2,
-        "documentId": "se4xav3gcmgrockwj7jxqdoa",
-        "nombre": "Sebastian Huertas",
-        "bio": "Sebastian huertas es un profile de ejemplo "
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 2
-    }
-  }
-}
-```
-
-</details>
-
----
-
 
 ## 3 · Podcast episodes
 
@@ -579,58 +342,9 @@ GET /podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
 }
 ```
 
----
-
-</details>
-
-### 3.3  Get **recents** podcast episode (6)
-
-```http
-GET /podcasts
-      ?sort[0]=date_publication:desc
-      &pagination[page]=1
-      &pagination[pageSize]=6
-      &populate[image][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "k528tp36miz745jt3jyy93xj",
-      "title": "\nDesarrollar videojuegos en Guatemala | EP 1 Dennis Aldana",
-      "date_publication": "2024-09-19",
-      "link": "https://www.youtube.com/watch?v=zlSbBsJYFGA",
-      "createdAt": "2025-08-28T00:36:45.157Z",
-      "updatedAt": "2025-08-28T00:36:45.157Z",
-      "publishedAt": "2025-08-28T00:36:44.967Z",
-      "locale": "en",
-      "image": {
-        "id": 3,
-        "documentId": "m8ru6j4tdtd7qd2qmjtdjmsu",
-        "url": "/uploads/Screenshot_2025_07_12_162816_0a9f9bf1c9.png"
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 6,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
-
 </details>
 
 ---
-
 ## 4 · Podcast crew
 
 ### 4.1  Get **all** podcast crew (+ media URL)
@@ -682,158 +396,336 @@ GET /podcast-crew?populate[photos][fields][0]=url
 
 </details>
 
+# 5 · Asociaciones
+
+La colección **Asociaciones** representa las juntas directivas por año académico, donde cada asociación contiene múltiples miembros con sus respectivos cargos.
+
+## Estructura de datos
+
+### Asociación
+- `year`: Año de la asociación (integer)
+- `Miembro`: Componente repetible con los datos de cada miembro
+
+### Componente Miembro
+- `nombre`: Nombre del miembro (string)
+- `Cargo`: Puesto en la asociación (enum)
+  - Presidente
+  - Vicepresidente  
+  - Secretario
+  - Tesorero
+  - Vocal
+  - Representante
+- `year_estudiante`: Año académico del miembro (enum)
+  - Primer año
+  - Segundo año
+  - Tercer año
+  - Cuarto año
+  - Quinto año
+- `foto`: Imagen del miembro (media)
+- `curriculum`: Biografía/experiencia del miembro (text)
+
 ---
 
+## 5.1 · Get **todas** las asociaciones (básico)
 
-## 5. Associations
-### 5.1 Get One association per year
 ```http
-GET /associations?filters[year][$eq]=2025
+GET /asociaciones
 ```
 
 <details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "documentId": "y0wo14ws3weh4zpcx89l9yv7",
-      "createdAt": "2025-08-28T00:07:16.324Z",
-      "updatedAt": "2025-08-28T00:07:16.324Z",
-      "publishedAt": "2025-08-28T00:07:16.223Z",
-      "locale": "en",
-      "description": "somos la asociacion de 2025",
-      "members": {
-        "Vocal": "Angela",
-        "Presidente": "Gerardo Pineda"
-      },
-      "year": "2025"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
-
-## 6 Series
-### 6.1 Get ***all*** series
-```http
-GET /series
-```
-
-<details>
-<summary>Example response (JSON)</summary>
+<summary>Ejemplo de respuesta (JSON)</summary>
 
 ```json
 {
   "data": [
     {
       "id": 1,
-      "documentId": "u0t51ceg5dxw1yv7su4t2a3m",
-      "createdAt": "2025-08-28T03:44:15.207Z",
-      "updatedAt": "2025-08-28T03:44:15.207Z",
-      "publishedAt": "2025-08-28T03:44:14.853Z",
-      "locale": "en",
-      "name": "focas"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
----
-
-### 6.2 Get ***all*** series
-```http
-GET /series?filter[id][$eq]=1
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "u0t51ceg5dxw1yv7su4t2a3m",
-      "createdAt": "2025-08-28T03:44:15.207Z",
-      "updatedAt": "2025-08-28T03:44:15.207Z",
-      "publishedAt": "2025-08-28T03:44:14.853Z",
-      "locale": "en",
-      "name": "focas"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
----
-
-## 7 News
-### 7.1 Get ***recent*** news
-```http
-GET /informations
-  ?sort[0]=date:desc
-  &pagination[page]=1
-  &pagination[pageSize]=3
-  &populate[photo][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z",
+        "publishedAt": "2025-01-15T10:00:00.000Z"
+      }
+    },
     {
       "id": 2,
-      "documentId": "mukp3s1esck2h68sqhcyablw",
-      "createdAt": "2025-09-08T03:24:57.269Z",
-      "updatedAt": "2025-09-08T03:24:57.269Z",
-      "publishedAt": "2025-09-08T03:24:58.331Z",
-      "title": "Intercambio a alemania",
-      "author": "la aso",
-      "date": "2025-08-12",
-      "photo_description": "focas",
-      "photo": {
-        "id": 2,
-        "documentId": "v523h1ahq3mq01uawb12xbmx",
-        "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
+      "attributes": {
+        "year": 2023,
+        "createdAt": "2024-01-15T10:00:00.000Z",
+        "updatedAt": "2024-01-15T10:00:00.000Z",
+        "publishedAt": "2024-01-15T10:00:00.000Z"
       }
     }
   ],
   "meta": {
     "pagination": {
       "page": 1,
-      "pageSize": 3,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+## 5.2 · Get **todas** las asociaciones con miembros y fotos
+
+```http
+GET /asociaciones?populate[Miembro][populate][foto][fields][0]=url
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z",
+        "publishedAt": "2025-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 1,
+            "nombre": "Ana García",
+            "Cargo": "Presidente",
+            "year_estudiante": "Cuarto año",
+            "curriculum": "Estudiante destacada con experiencia en liderazgo estudiantil...",
+            "foto": {
+              "data": {
+                "id": 5,
+                "attributes": {
+                  "url": "/uploads/ana_garcia_president_2024.jpg"
+                }
+              }
+            }
+          },
+          {
+            "id": 2,
+            "nombre": "Carlos López",
+            "Cargo": "Vicepresidente", 
+            "year_estudiante": "Tercer año",
+            "curriculum": "Especializado en desarrollo web y coordinación de eventos...",
+            "foto": {
+              "data": {
+                "id": 6,
+                "attributes": {
+                  "url": "/uploads/carlos_lopez_vice_2024.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
       "pageCount": 1,
       "total": 1
     }
   }
 }
 ```
+
+</details>
+
 ---
+
+## 5.3 · Get asociación por **año específico** con miembros y fotos
+
+```http
+GET /asociaciones?filters[year][$eq]=2024&populate[Miembro][populate][foto][fields][0]=url
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z", 
+        "publishedAt": "2025-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 1,
+            "nombre": "Ana García",
+            "Cargo": "Presidente",
+            "year_estudiante": "Cuarto año",
+            "curriculum": "Estudiante destacada con experiencia en liderazgo estudiantil y coordinación de proyectos académicos.",
+            "foto": {
+              "data": {
+                "id": 5,
+                "attributes": {
+                  "url": "/uploads/ana_garcia_president_2024.jpg"
+                }
+              }
+            }
+          },
+          {
+            "id": 2,
+            "nombre": "Carlos López",
+            "Cargo": "Vicepresidente",
+            "year_estudiante": "Tercer año", 
+            "curriculum": "Especializado en desarrollo web y coordinación de eventos estudiantiles.",
+            "foto": {
+              "data": {
+                "id": 6,
+                "attributes": {
+                  "url": "/uploads/carlos_lopez_vice_2024.jpg"
+                }
+              }
+            }
+          },
+          {
+            "id": 3,
+            "nombre": "María Rodríguez",
+            "Cargo": "Secretario",
+            "year_estudiante": "Segundo año",
+            "curriculum": "Encargada de documentación y comunicación interna de la asociación.",
+            "foto": {
+              "data": {
+                "id": 7,
+                "attributes": {
+                  "url": "/uploads/maria_rodriguez_secretary_2024.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 1
+    }
+  }
+}
+```
+
+</details>
+
+---
+
+## 5.4 · Get asociaciones **ordenadas por año** (descendente) con miembros y fotos
+
+```http
+GET /asociaciones?sort[0]=year:desc&populate[Miembro][populate][foto][fields][0]=url
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "attributes": {
+        "year": 2024,
+        "createdAt": "2025-01-15T10:00:00.000Z",
+        "updatedAt": "2025-01-15T10:00:00.000Z",
+        "publishedAt": "2025-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 1,
+            "nombre": "Ana García",
+            "Cargo": "Presidente",
+            "year_estudiante": "Cuarto año",
+            "curriculum": "Estudiante destacada con experiencia en liderazgo estudiantil...",
+            "foto": {
+              "data": {
+                "id": 5,
+                "attributes": {
+                  "url": "/uploads/ana_garcia_president_2024.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "attributes": {
+        "year": 2023,
+        "createdAt": "2024-01-15T10:00:00.000Z",
+        "updatedAt": "2024-01-15T10:00:00.000Z",
+        "publishedAt": "2024-01-15T10:00:00.000Z",
+        "Miembro": [
+          {
+            "id": 4,
+            "nombre": "Pedro Martínez",
+            "Cargo": "Presidente",
+            "year_estudiante": "Quinto año",
+            "curriculum": "Ex-presidente con amplia experiencia en gestión estudiantil...",
+            "foto": {
+              "data": {
+                "id": 8,
+                "attributes": {
+                  "url": "/uploads/pedro_martinez_president_2023.jpg"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageSize": 25,
+      "pageCount": 1,
+      "total": 2
+    }
+  }
+}
+```
+
+</details>
+
+
+---
+
+## ⚙️ Configuración adicional recomendada
+
+Para optimizar el rendimiento y funcionalidad, considera:
+
+1. **Índices en base de datos**: Agregar índice en el campo `year` para consultas más rápidas
+2. **Validaciones**: Implementar validación para evitar años duplicados
+3. **Permisos**: Configurar roles de usuario apropiados para CRUD operations
+4. **Paginación**: Para asociaciones con muchos miembros, considera pagination en el frontend
+
+---
+
+## 🔒 Autenticación
+
+Todos los endpoints requieren autenticación Bearer token:
+
+```http
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+```
+---
+
 
 ## 📚 Learn more
 
@@ -853,4 +745,3 @@ Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>

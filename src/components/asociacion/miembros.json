@@ -1,0 +1,47 @@
+{
+  "collectionName": "components_asociacion_miembros",
+  "info": {
+    "displayName": "miembros"
+  },
+  "options": {},
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "Cargo": {
+      "type": "enumeration",
+      "enum": [
+        "Presidente",
+        "Vicepresidente",
+        "Secretario",
+        "Tesorero",
+        "Vocal",
+        "Representante"
+      ]
+    },
+    "year_estudiante": {
+      "type": "enumeration",
+      "enum": [
+        "Primer año",
+        "Segundo año",
+        "Tercer año",
+        "Cuarto año",
+        "Quinto año"
+      ]
+    },
+    "foto": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "curriculum": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}
