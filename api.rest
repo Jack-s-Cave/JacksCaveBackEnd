@@ -6,12 +6,55 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 GET http://localhost:1337/api/author-profiles?filters[id][$eq]=2&populate[foto][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
+# Get all series
+GET http://localhost:1337/api/series
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get one series
+GET http://localhost:1337/api/series?filter[id][$eq]=1
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
 # Get all articles
 GET http://localhost:1337/api/articles?populate[media][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
+# Get the most recent articles (6)
+GET http://localhost:1337/api/articles
+  ?sort[0]=createdAt:desc
+  &pagination[page]=1
+  &pagination[pageSize]=6
+  &populate[media][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
 # Get all articles of one user
-GET http://localhost:1337/api/articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
+GET http://localhost:1337/api/articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url&populate[author_profile][fields][0]=nombre&populate[author_profile][fields][1]=bio
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get one articles
+GET http://localhost:1337/api/articles?filters[id][$eq]=6
+  &populate[media][fields][0]=url
+  &populate[author_profile][fields][0]=nombre
+  &populate[author_profile][fields][1]=bio
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all articles by filters
+GET http://localhost:1337/api/articles
+  ?filters[title][$eq]=Focas%20embarazadas
+  &populate[media][fields][0]=url
+  &populate[author_profile][fields][0]=nombre
+  &populate[author_profile][fields][1]=bio
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all articles of a serie
+GET http://localhost:1337/api/articles
+  ?filters[serie][name][$eq]=focas
+  &populate[media][fields][0]=url
+  &populate[author_profile][fields][0]=nombre
+  &populate[author_profile][fields][1]=bio
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get all articles of the "focas" series
+GET http://localhost:1337/api/articles?filters[serie][slug][$eq]=focas&populate[media][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
 # Get all Podcast
@@ -20,6 +63,14 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
 # Get one Podcast
 GET http://localhost:1337/api/podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get the most recent podcasts (6)
+GET http://localhost:1337/api/podcasts
+  ?sort[0]=date_publication:desc
+  &pagination[page]=1
+  &pagination[pageSize]=6
+  &populate[image][fields][0]=url
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 
 # Get podcast crew

@@ -35,6 +35,11 @@
       "relation": "oneToMany",
       "target": "api::article.article",
       "mappedBy": "author_profile"
+    },
+    "series": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::serie.serie"
     }
   }
 }
