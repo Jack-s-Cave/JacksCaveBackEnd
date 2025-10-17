@@ -7,48 +7,7 @@ npm install
 yarn install
 ```
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI)---
-
-### 2.3  Get **all** articles of a given series
-
-```http
-GET /articles?filters[serie][slug][$eq]=focas&populate[media][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "attributes": {
-        "title": "Por que las focas son focas",
-        "content": "Las focas son mamíferos marinos...",
-        "createdAt": "2025-07-12T22:00:00.000Z",
-        "updatedAt": "2025-07-12T22:00:00.000Z",
-        "publishedAt": "2025-07-12T22:00:00.000Z",
-        "media": [
-          {
-            "id": 2,
-            "attributes": {
-              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
-            }
-          }
-        ]
-      }
-    }
-  ],
-  "meta": { "pagination": { "total": 1 } }
-}
-```
-
-</details>
-
----
-
-## 3 · Podcast episodesich lets you scaffold and manage your project in seconds.
+Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ### `develop`
 
@@ -702,6 +661,121 @@ GET /asociaciones?sort[0]=year:desc&populate[Miembro][populate][foto][fields][0]
 ```
 
 </details>
+
+
+---
+Aquí está la sección de documentación para **Article_MD**:
+
+---
+
+## **6 · Article_MD**
+
+La colección **Article_MD** representa los artículos con contenido en formato Markdown, donde cada artículo puede tener múltiples autores e imágenes asociadas.
+
+### **Estructura de datos**
+
+**Article_MD**
+* `Titulo`: Título del artículo (string)
+* `Descripcion`: Descripción breve del artículo (text)
+* `fecha_de_publicacion`: Fecha de publicación (date)
+* `Article_core`: Contenido principal del artículo (rich text - Markdown)
+* `Autores`: Componente repetible con los datos de cada autor
+* `imagenes`: Imágenes múltiples asociadas al artículo (multiple media)
+
+**Componente Autores**
+* `primer_nombre`: Primer nombre del autor (string)
+* `apellido`: Apellido del autor (string)
+
+
+### **6.1 · Get todos los Article_MD (completo)**
+
+```http
+GET /article-mds?populate=*
+```
+
+<details>
+<summary>Ejemplo de respuesta (JSON)</summary>
+
+```json
+{
+    "data": [
+        {
+            "id": 2,
+            "documentId": "dz9j38vbyyufbzs3z5uyj9ku",
+            "Titulo": "Lorem Ipsum: Una Exploración Profunda",
+            "Descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec congue risus tristique justo interdum viverra...",
+            "fecha_de_publicacion": "2025-10-01",
+            "Article_core": "# Lorem Ipsum Document\n\n## Introduction\n\nLorem ipsum dolor sit amet...",
+            "createdAt": "2025-10-01T23:39:57.206Z",
+            "updatedAt": "2025-10-01T23:39:57.206Z",
+            "publishedAt": "2025-10-01T23:39:58.766Z",
+            "Autores": [
+                {
+                    "id": 2,
+                    "primer_nombre": "Julio",
+                    "apellido": "Paz"
+                }
+            ],
+            "imagenes": null
+        },
+        {
+            "id": 4,
+            "documentId": "rng7hi1cflx9f83fxcxk8pdq",
+            "Titulo": "Lorem Ipsum: 2",
+            "Descripcion": "Nunc eget ullamcorper eros, ac auctor ante...",
+            "fecha_de_publicacion": "2025-07-09",
+            "Article_core": "# Lorem Ipsum Document\n\n## Introduction...",
+            "createdAt": "2025-10-01T23:40:47.157Z",
+            "updatedAt": "2025-10-01T23:40:47.157Z",
+            "publishedAt": "2025-10-01T23:40:48.784Z",
+            "Autores": [
+                {
+                    "id": 4,
+                    "primer_nombre": "Antonio",
+                    "apellido": "Perez"
+                }
+            ],
+            "imagenes": [
+                {
+                    "id": 6,
+                    "documentId": "r8mtim4oc4y0cpe3hj145n06",
+                    "name": "images.png",
+                    "alternativeText": null,
+                    "caption": null,
+                    "width": 224,
+                    "height": 224,
+                    "formats": {
+                        "thumbnail": {
+                            "ext": ".png",
+                            "url": "/uploads/thumbnail_images_7e607fd947.png",
+                            "hash": "thumbnail_images_7e607fd947",
+                            "mime": "image/png",
+                            "name": "thumbnail_images.png",
+                            "size": 7.38,
+                            "width": 156,
+                            "height": 156
+                        }
+                    },
+                    "url": "/uploads/images_7e607fd947.png",
+                    "mime": "image/png",
+                    "size": 2.61
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "pagination": {
+            "page": 1,
+            "pageSize": 25,
+            "pageCount": 1,
+            "total": 2
+        }
+    }
+}
+```
+
+</details>
+
 
 
 ---

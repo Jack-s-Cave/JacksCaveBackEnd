@@ -373,6 +373,42 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiArticleMdArticleMd extends Struct.CollectionTypeSchema {
+  collectionName: 'article_mds';
+  info: {
+    displayName: 'Article_MD';
+    pluralName: 'article-mds';
+    singularName: 'article-md';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Article_core: Schema.Attribute.RichText;
+    Autores: Schema.Attribute.Component<'articulo.autores-de-articulo', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Descripcion: Schema.Attribute.Text;
+    fecha_de_publicacion: Schema.Attribute.Date;
+    imagenes: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios',
+      true
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article-md.article-md'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Titulo: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   collectionName: 'articles';
   info: {
@@ -1216,6 +1252,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::article-md.article-md': ApiArticleMdArticleMd;
       'api::article.article': ApiArticleArticle;
       'api::association.association': ApiAssociationAssociation;
       'api::author-profile.author-profile': ApiAuthorProfileAuthorProfile;
