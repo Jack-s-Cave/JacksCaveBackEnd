@@ -402,6 +402,21 @@ export interface ApiArticleMdArticleMd extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    tags: Schema.Attribute.Enumeration<
+      [
+        'Linux',
+        'Windows',
+        'MacOS',
+        'Ciberseguridad',
+        'Videojuegos',
+        'Data Science',
+        'Inteligencia Artificial',
+        'Intercambios',
+        'UI/UX Design',
+        'Backend',
+        'Frontend',
+      ]
+    >;
     Titulo: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -469,6 +484,35 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAsociacionAsociacion extends Struct.CollectionTypeSchema {
+  collectionName: 'asociaciones';
+  info: {
+    displayName: 'Asociacion ';
+    pluralName: 'asociaciones';
+    singularName: 'asociacion';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::asociacion.asociacion'
+    > &
+      Schema.Attribute.Private;
+    Miembro: Schema.Attribute.Component<'asociacion.miembros', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    year: Schema.Attribute.Integer;
   };
 }
 
@@ -1254,6 +1298,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article-md.article-md': ApiArticleMdArticleMd;
       'api::article.article': ApiArticleArticle;
+      'api::asociacion.asociacion': ApiAsociacionAsociacion;
       'api::association.association': ApiAssociationAssociation;
       'api::author-profile.author-profile': ApiAuthorProfileAuthorProfile;
       'api::information.information': ApiInformationInformation;

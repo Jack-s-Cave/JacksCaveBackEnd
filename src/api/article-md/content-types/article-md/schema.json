@@ -37,6 +37,22 @@
         "videos",
         "audios"
       ]
+    },
+    "tags": {
+      "type": "enumeration",
+      "enum": [
+        "Linux",
+        "Windows",
+        "MacOS",
+        "Ciberseguridad",
+        "Videojuegos",
+        "Data Science",
+        "Inteligencia Artificial",
+        "Intercambios",
+        "UI/UX Design",
+        "Backend",
+        "Frontend"
+      ]
     }
   }
 }
