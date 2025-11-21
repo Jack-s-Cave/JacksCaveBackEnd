@@ -97,3 +97,11 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 # Get all Article_MD (completo - todo de todo)
 GET http://localhost:1337/api/article-mds?populate=*
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# ===== BÚSQUEDA DE ARTÍCULOS =====
+
+GET http://localhost:1337/api/article-mds
+  ?filters[$or][0][Titulo][$containsi]={{TERMINO_BUSQUEDA}}
+  &filters[$or][1][author_profile][nombre][$containsi]={{TERMINO_BUSQUEDA}}
+  &populate=*
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
