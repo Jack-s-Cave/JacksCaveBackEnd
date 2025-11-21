@@ -12,18 +12,15 @@
   "pluginOptions": {},
   "attributes": {
     "Titulo": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "Descripcion": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "fecha_de_publicacion": {
       "type": "date"
-    },
-    "Autores": {
-      "type": "component",
-      "component": "articulo.autores-de-articulo",
-      "repeatable": true
     },
     "Article_core": {
       "type": "richtext"
@@ -53,6 +50,18 @@
         "Backend",
         "Frontend"
       ]
+    },
+    "author_profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author-profile.author-profile",
+      "inversedBy": "article_mds"
+    },
+    "serie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::serie.serie",
+      "inversedBy": "article_mds"
     }
   }
 }
