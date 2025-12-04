@@ -96,12 +96,60 @@ Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 # ===== ARTICLE MD ENDPOINTS =====
 # Get all Article_MD (completo - todo de todo)
 GET http://localhost:1337/api/article-mds?populate=*
-Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+
+# Get los 6 artículos más recientes (para landing page)
+GET http://localhost:1337/api/article-mds?sort[0]=fecha_de_publicacion:desc&pagination[page]=1&pagination[pageSize]=6&populate=*
 
 # ===== BÚSQUEDA DE ARTÍCULOS =====
 
-GET http://localhost:1337/api/article-mds
-  ?filters[$or][0][Titulo][$containsi]={{TERMINO_BUSQUEDA}}
-  &filters[$or][1][author_profile][nombre][$containsi]={{TERMINO_BUSQUEDA}}
-  &populate=*
-Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
+# Búsqueda por texto (título o autor)
+GET http://localhost:1337/api/article-mds?filters[$or][0][Titulo][$containsi]={{TERMINO_BUSQUEDA}}&filters[$or][1][author_profile][nombre][$containsi]={{TERMINO_BUSQUEDA}}&populate=*
+
+# ===== FILTROS POR TAGS =====
+
+# Filtrar por UN tag específico
+GET http://localhost:1337/api/article-mds?filters[tags][$eq]=Linux&populate=*
+
+# Filtrar por MÚLTIPLES tags (OR - cualquiera de estos)
+GET http://localhost:1337/api/article-mds?filters[$or][0][tags][$eq]=Linux&filters[$or][1][tags][$eq]=Windows&filters[$or][2][tags][$eq]=MacOS&populate=*
+
+# ===== FILTROS POR FECHA =====
+
+# Filtrar por fecha DESDE (mayor o igual que)
+GET http://localhost:1337/api/article-mds?filters[fecha_de_publicacion][$gte]=2025-01-01&populate=*
+
+# Filtrar por fecha HASTA (menor o igual que)
+GET http://localhost:1337/api/article-mds?filters[fecha_de_publicacion][$lte]=2025-12-31&populate=*
+
+# Filtrar por RANGO de fechas (desde - hasta)
+GET http://localhost:1337/api/article-mds?filters[fecha_de_publicacion][$gte]=2025-01-01&filters[fecha_de_publicacion][$lte]=2025-12-31&populate=*
+
+# ===== COMBINACIÓN DE FILTROS =====
+
+# Tags + Fechas (sin búsqueda de texto)
+GET http://localhost:1337/api/article-mds?filters[$and][0][$or][0][tags][$eq]=Linux&filters[$and][0][$or][1][tags][$eq]=Ciberseguridad&filters[$and][1][fecha_de_publicacion][$gte]=2025-01-01&filters[$and][1][fecha_de_publicacion][$lte]=2025-12-31&populate=*
+
+# ===== ORDENAMIENTO =====
+
+# Ordenar por fecha descendente (más recientes primero)
+GET http://localhost:1337/api/article-mds?sort[0]=fecha_de_publicacion:desc&populate=*
+
+# Ordenar por fecha ascendente (más antiguos primero)
+GET http://localhost:1337/api/article-mds?sort[0]=fecha_de_publicacion:asc&populate=*
+
+# Ordenar por título alfabético
+GET http://localhost:1337/api/article-mds?sort[0]=Titulo:asc&populate=*
+
+# ===== PAGINACIÓN =====
+
+# Primera página (6 artículos)
+GET http://localhost:1337/api/article-mds?pagination[page]=1&pagination[pageSize]=6&populate=*
+
+# Segunda página
+GET http://localhost:1337/api/article-mds?pagination[page]=2&pagination[pageSize]=6&populate=*
+
+# ===== FILTROS POR AUTOR =====
+
+# Artículos de un autor específico (por nombre)
+GET http://localhost:1337/api/article-mds?filters[author_profile][nombre][$eq]=Pedro Rodrigues&populate=*
+
