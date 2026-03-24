@@ -32,5 +32,30 @@ export default factories.createCoreController('api::article-md.article-md', ({ s
         // Ej: Ocultar campos sensibles o calcular métricas dinámicas.
 
         return { data, meta };
+    },
+
+    /**
+     * Endpoint personalizado para obtener todas las etiquetas únicas.
+     */
+    async getUniqueTags(ctx) {
+        try {
+            // 1. Traemos todos los artículos, pero SOLO el campo 'tags'
+            const articles = await strapi.entityService.findMany('api::article-md.article-md', {
+                fields: ['tags'],
+            });
+
+            // 2. Extraemos las etiquetas y filtramos solo null o undefined (TypeScript feliz)
+            const rawTags = articles
+                .map(article => article.tags)
+                .filter(tag => tag !== null && tag !== undefined);
+
+            // 3. Como sabemos que es un Enum, limpiamos duplicados directamente
+            const uniqueTags = [...new Set(rawTags)];
+
+            // 4. Devolvemos el array
+            return ctx.send({ data: uniqueTags });
+        } catch (err) {
+            ctx.throw(500, err);
+        }
     }
 }));
