@@ -419,9 +419,40 @@ export interface ApiArticleMdArticleMd extends Struct.CollectionTypeSchema {
         'UI/UX Design',
         'Backend',
         'Frontend',
+        'News',
       ]
     >;
     Titulo: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAsociacionInfoAsociacionInfo
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'asociacion_infos';
+  info: {
+    displayName: 'AsociacionInfo';
+    pluralName: 'asociacion-infos';
+    singularName: 'asociacion-info';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::asociacion-info.asociacion-info'
+    > &
+      Schema.Attribute.Private;
+    photo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -675,6 +706,35 @@ export interface ApiSerieSerie extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiWhoAreWeWhoAreWe extends Struct.CollectionTypeSchema {
+  collectionName: 'who_are_wes';
+  info: {
+    displayName: 'WhoAreWe';
+    pluralName: 'who-are-wes';
+    singularName: 'who-are-we';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::who-are-we.who-are-we'
+    > &
+      Schema.Attribute.Private;
+    photo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1192,12 +1252,14 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::article-md.article-md': ApiArticleMdArticleMd;
+      'api::asociacion-info.asociacion-info': ApiAsociacionInfoAsociacionInfo;
       'api::asociacion.asociacion': ApiAsociacionAsociacion;
       'api::author-profile.author-profile': ApiAuthorProfileAuthorProfile;
       'api::information.information': ApiInformationInformation;
       'api::podcast-crew.podcast-crew': ApiPodcastCrewPodcastCrew;
       'api::podcast.podcast': ApiPodcastPodcast;
       'api::serie.serie': ApiSerieSerie;
+      'api::who-are-we.who-are-we': ApiWhoAreWeWhoAreWe;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
