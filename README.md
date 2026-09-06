@@ -57,6 +57,127 @@ All examples assume you have stored your Admin‑API token (or a Users‑Permiss
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 ```
 
+If a route below is enabled for the **Public** role (Settings → Users & Permissions → Roles → Public, in the admin panel), the `Authorization` header can be omitted for it.
+
+---
+
+## 📖 Endpoints
+
+All collection-type endpoints support Strapi's standard REST query DSL out of the box (no extra setup needed): `filters`, `populate`, `sort`, `pagination`, and `fields`. A few common examples:
+
+```
+?populate=*                                  # populate all relations/media one level deep
+?populate=author_profile,serie               # populate specific relations
+?filters[Titulo][$containsi]=linux           # case-insensitive partial match
+?sort[0]=fecha_de_publicacion:desc
+?pagination[page]=1&pagination[pageSize]=25
+?fields[0]=Titulo&fields[1]=Descripcion
+```
+
+> ⚠️ **Strapi 5 note:** the `:documentId` in each `findOne` route below is the string `documentId` field returned in list responses (e.g. `"documentId": "bgh1cdztbvg2cf3ymcg61t6a"`) — **not** the numeric `id`. Requesting `/api/article-mds/2` (a numeric id) returns `404`; you must use the `documentId` from a prior list call.
+
+### Article MD (`article-md`)
+
+Blog articles written in rich text/markdown.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/article-mds` | List all articles |
+| GET | `{{baseUrl}}/api/article-mds/:documentId` | Get one article by id |
+
+**Fields:** `Titulo` (string, required), `Descripcion` (text, required), `fecha_de_publicacion` (date), `Article_core` (richtext), `imagenes` (media, multiple), `tags` (enum: `Linux`, `Windows`, `MacOS`, `Ciberseguridad`, `Videojuegos`, `Data Science`, `Inteligencia Artificial`, `Intercambios`, `UI/UX Design`, `Backend`, `Frontend`), `author_profile` (relation → author-profile), `serie` (relation → serie).
+
+Example: `GET {{baseUrl}}/api/article-mds?populate=author_profile,serie,imagenes&filters[tags][$eq]=Backend`
+
+---
+
+### Asociación (`asociacion`)
+
+Yearly student association board (junta directiva), with members as a repeatable component.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/asociaciones` | List all association years |
+| GET | `{{baseUrl}}/api/asociaciones/:documentId` | Get one year by id |
+
+**Fields:** `year` (integer), `Miembro` (repeatable component `asociacion.miembros`).
+
+Example: `GET {{baseUrl}}/api/asociaciones?populate=Miembro&filters[year][$eq]=2024`
+
+---
+
+### Author Profile (`author-profile`)
+
+Author/bio info shown alongside articles.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/author-profiles` | List all author profiles |
+| GET | `{{baseUrl}}/api/author-profiles/:documentId` | Get one author profile by id |
+
+**Fields:** `nombre` (string, required), `bio` (text), `foto` (media, required), `social_media` (json), `series` (relation → serie, one-to-many), `article_mds` (relation → article-md, one-to-many).
+
+Example: `GET {{baseUrl}}/api/author-profiles/:documentId?populate=foto,article_mds`
+
+---
+
+### Information (`information`)
+
+General announcement/info cards (e.g. news snippets).
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/informations` | List all information entries |
+| GET | `{{baseUrl}}/api/informations/:documentId` | Get one entry by id |
+
+**Fields:** `title` (string, required), `author` (string), `date` (date), `photo` (media), `photo_description` (text).
+
+Example: `GET {{baseUrl}}/api/informations?sort[0]=date:desc`
+
+---
+
+### Podcast (`podcast`)
+
+Individual podcast episodes.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/podcasts` | List all podcast episodes |
+| GET | `{{baseUrl}}/api/podcasts/:documentId` | Get one episode by id |
+
+**Fields:** `title` (text, required), `image` (media), `date_publication` (date, required), `link` (string, required, external link to the episode).
+
+Example: `GET {{baseUrl}}/api/podcasts?populate=image&sort[0]=date_publication:desc`
+
+---
+
+### Podcast Crew (`podcast-crew`) — single type
+
+The podcast's crew/team info page. Unlike the other endpoints, this is a **single type**: there's only ever one entry, so there's no `:id` and no list — `find` returns the one entry directly.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/podcast-crew` | Get the podcast crew info |
+
+**Fields:** `nombre` (string, required), `conductores` (json, required), `proposito` (text, required), `photos` (media, multiple).
+
+> ⚠️ **Known issue:** this endpoint currently returns `500 Internal Server Error` if no entry has ever been created in the admin panel yet (e.g. on a freshly seeded database), instead of an empty/null response. An entry must be created via the admin panel at least once before this endpoint works.
+
+---
+
+### Serie (`serie`)
+
+A named series/collection that groups multiple articles.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/series` | List all series |
+| GET | `{{baseUrl}}/api/series/:documentId` | Get one series by id |
+
+**Fields:** `name` (string, required), `article_mds` (relation → article-md, one-to-many).
+
+Example: `GET {{baseUrl}}/api/series/:documentId?populate=article_mds`
+
 ---
 
 # ⚙️ Configuración adicional recomendada
