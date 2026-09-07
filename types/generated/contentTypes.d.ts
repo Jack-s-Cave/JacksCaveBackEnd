@@ -428,6 +428,36 @@ export interface ApiArticleMdArticleMd extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAsociacionInfoAsociacionInfo
+  extends Struct.SingleTypeSchema {
+  collectionName: 'asociacion_infos';
+  info: {
+    displayName: 'Asociacion Info';
+    pluralName: 'asociacion-infos';
+    singularName: 'asociacion-info';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    descripcion: Schema.Attribute.Text & Schema.Attribute.Required;
+    foto: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::asociacion-info.asociacion-info'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAsociacionAsociacion extends Struct.CollectionTypeSchema {
   collectionName: 'asociaciones';
   info: {
@@ -1192,6 +1222,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::article-md.article-md': ApiArticleMdArticleMd;
+      'api::asociacion-info.asociacion-info': ApiAsociacionInfoAsociacionInfo;
       'api::asociacion.asociacion': ApiAsociacionAsociacion;
       'api::author-profile.author-profile': ApiAuthorProfileAuthorProfile;
       'api::information.information': ApiInformationInformation;

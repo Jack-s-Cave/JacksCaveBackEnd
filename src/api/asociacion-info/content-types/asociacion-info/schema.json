@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "asociacion_infos",
+  "info": {
+    "singularName": "asociacion-info",
+    "pluralName": "asociacion-infos",
+    "displayName": "Asociacion Info"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "descripcion": {
+      "type": "text",
+      "required": true
+    },
+    "foto": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}
