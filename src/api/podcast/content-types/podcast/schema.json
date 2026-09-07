@@ -56,6 +56,14 @@
         }
       },
       "required": true
+    },
+    "youtube_link": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
