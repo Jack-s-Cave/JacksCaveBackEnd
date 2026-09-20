@@ -23,17 +23,21 @@
       "multiple": false,
       "required": true,
       "allowedTypes": [
-        "images",
-        "files"
+        "images"
       ]
     },
     "social_media": {
       "type": "json"
     },
-    "articles": {
+    "series": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::article.article",
+      "target": "api::serie.serie"
+    },
+    "article_mds": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article-md.article-md",
       "mappedBy": "author_profile"
     }
   }

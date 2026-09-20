@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "article_mds",
+  "info": {
+    "singularName": "article-md",
+    "pluralName": "article-mds",
+    "displayName": "Article_MD"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Titulo": {
+      "type": "string",
+      "required": true
+    },
+    "Descripcion": {
+      "type": "text",
+      "required": true
+    },
+    "fecha_de_publicacion": {
+      "type": "date"
+    },
+    "Article_core": {
+      "type": "richtext"
+    },
+    "imagenes": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "tags": {
+      "type": "enumeration",
+      "enum": [
+        "Linux",
+        "Windows",
+        "MacOS",
+        "Ciberseguridad",
+        "Videojuegos",
+        "Data Science",
+        "Inteligencia Artificial",
+        "Intercambios",
+        "UI/UX Design",
+        "Backend",
+        "Frontend"
+      ]
+    },
+    "author_profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author-profile.author-profile",
+      "inversedBy": "article_mds"
+    },
+    "serie": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::serie.serie",
+      "inversedBy": "article_mds"
+    }
+  }
+}

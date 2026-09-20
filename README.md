@@ -57,308 +57,151 @@ All examples assume you have stored your Admin‑API token (or a Users‑Permiss
 Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 ```
 
+If a route below is enabled for the **Public** role (Settings → Users & Permissions → Roles → Public, in the admin panel), the `Authorization` header can be omitted for it.
+
 ---
 
-## 1 · Author Profiles
+## 📖 Endpoints
 
-### 1.1  Get **all** profiles (+ photo URL)
+All collection-type endpoints support Strapi's standard REST query DSL out of the box (no extra setup needed): `filters`, `populate`, `sort`, `pagination`, and `fields`. A few common examples:
+
+```
+?populate=*                                  # populate all relations/media one level deep
+?populate=author_profile,serie               # populate specific relations
+?filters[Titulo][$containsi]=linux           # case-insensitive partial match
+?sort[0]=fecha_de_publicacion:desc
+?pagination[page]=1&pagination[pageSize]=25
+?fields[0]=Titulo&fields[1]=Descripcion
+```
+
+> ⚠️ **Strapi 5 note:** the `:documentId` in each `findOne` route below is the string `documentId` field returned in list responses (e.g. `"documentId": "bgh1cdztbvg2cf3ymcg61t6a"`) — **not** the numeric `id`. Requesting `/api/article-mds/2` (a numeric id) returns `404`; you must use the `documentId` from a prior list call.
+
+### Article MD (`article-md`)
+
+Blog articles written in rich text/markdown.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/article-mds` | List all articles |
+| GET | `{{baseUrl}}/api/article-mds/:documentId` | Get one article by id |
+
+**Fields:** `Titulo` (string, required), `Descripcion` (text, required), `fecha_de_publicacion` (date), `Article_core` (richtext), `imagenes` (media, multiple), `tags` (enum: `Linux`, `Windows`, `MacOS`, `Ciberseguridad`, `Videojuegos`, `Data Science`, `Inteligencia Artificial`, `Intercambios`, `UI/UX Design`, `Backend`, `Frontend`), `author_profile` (relation → author-profile), `serie` (relation → serie).
+
+Example: `GET {{baseUrl}}/api/article-mds?populate=author_profile,serie,imagenes&filters[tags][$eq]=Backend`
+
+---
+
+### Asociación (`asociacion`)
+
+Yearly student association board (junta directiva), with members as a repeatable component.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/asociaciones` | List all association years |
+| GET | `{{baseUrl}}/api/asociaciones/:documentId` | Get one year by id |
+
+**Fields:** `year` (integer), `Miembro` (repeatable component `asociacion.miembros`).
+
+Example: `GET {{baseUrl}}/api/asociaciones?populate=Miembro&filters[year][$eq]=2024`
+
+---
+
+### Author Profile (`author-profile`)
+
+Author/bio info shown alongside articles.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/author-profiles` | List all author profiles |
+| GET | `{{baseUrl}}/api/author-profiles/:documentId` | Get one author profile by id |
+
+**Fields:** `nombre` (string, required), `bio` (text), `foto` (media, required), `social_media` (json), `series` (relation → serie, one-to-many), `article_mds` (relation → article-md, one-to-many).
+
+Example: `GET {{baseUrl}}/api/author-profiles/:documentId?populate=foto,article_mds`
+
+---
+
+### Information (`information`)
+
+General announcement/info cards (e.g. news snippets).
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/informations` | List all information entries |
+| GET | `{{baseUrl}}/api/informations/:documentId` | Get one entry by id |
+
+**Fields:** `title` (string, required), `author` (string), `date` (date), `photo` (media), `photo_description` (text).
+
+Example: `GET {{baseUrl}}/api/informations?sort[0]=date:desc`
+
+---
+
+### Podcast (`podcast`)
+
+Individual podcast episodes.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/podcasts` | List all podcast episodes |
+| GET | `{{baseUrl}}/api/podcasts/:documentId` | Get one episode by id |
+
+**Fields:** `title` (text, required), `image` (media), `date_publication` (date, required), `link` (string, required, external link to the episode).
+
+Example: `GET {{baseUrl}}/api/podcasts?populate=image&sort[0]=date_publication:desc`
+
+---
+
+### Podcast Crew (`podcast-crew`) — single type
+
+The podcast's crew/team info page. Unlike the other endpoints, this is a **single type**: there's only ever one entry, so there's no `:id` and no list — `find` returns the one entry directly.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/podcast-crew` | Get the podcast crew info |
+
+**Fields:** `nombre` (string, required), `conductores` (json, required), `proposito` (text, required), `photos` (media, multiple).
+
+> ⚠️ **Known issue:** this endpoint currently returns `500 Internal Server Error` if no entry has ever been created in the admin panel yet (e.g. on a freshly seeded database), instead of an empty/null response. An entry must be created via the admin panel at least once before this endpoint works.
+
+---
+
+### Serie (`serie`)
+
+A named series/collection that groups multiple articles.
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `{{baseUrl}}/api/series` | List all series |
+| GET | `{{baseUrl}}/api/series/:documentId` | Get one series by id |
+
+**Fields:** `name` (string, required), `article_mds` (relation → article-md, one-to-many).
+
+Example: `GET {{baseUrl}}/api/series/:documentId?populate=article_mds`
+
+---
+
+# ⚙️ Configuración adicional recomendada
+
+Para optimizar el rendimiento y funcionalidad, considera:
+
+1. **Índices en base de datos**: Agregar índice en el campo `year` para consultas más rápidas
+2. **Validaciones**: Implementar validación para evitar años duplicados
+3. **Permisos**: Configurar roles de usuario apropiados para CRUD operations
+4. **Paginación**: Para asociaciones con muchos miembros, considera pagination en el frontend
+
+---
+
+## 🔒 Autenticación
+
+Todos los endpoints requieren autenticación Bearer token:
 
 ```http
-GET /author-profiles?populate[foto][fields][0]=url
+Authorization: Bearer {{$dotenv STRAPI_TOKEN}}
 ```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "attributes": {
-        "nombre": "Sebastian Huertas",
-        "bio": "Example profile",
-        "social_media": {
-          "instagram": "https://www.instagram.com/xtsebas/"
-        },
-        "foto": {
-          "data": {
-            "id": 1,
-            "attributes": {
-              "url": "/uploads/sonic_567a1e1ae3.jpg"
-            }
-          }
-        }
-      }
-    }
-  ],
-  "meta": {
-    "pagination": { "total": 1, "page": 1, "pageSize": 25, "pageCount": 1 }
-  }
-}
-```
-
-</details>
-
----
-
-### 1.2  Get **one** profile by `id` (+ photo URL)
-
-```http
-GET /author-profiles?filters[id][$eq]=2&populate[foto][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "attributes": {
-        "nombre": "Sebastian Huertas",
-        "bio": "Example profile",
-        "foto": {
-          "data": {
-            "attributes": {
-              "url": "/uploads/sonic_567a1e1ae3.jpg"
-            }
-          }
-        }
-      }
-    }
-  ],
-  "meta": { "pagination": { "total": 1 } }
-}
-```
-
-</details>
-
----
-
-## 2 · Articles
-
-### 2.1  Get **all** articles (+ media URL)
-
-```http
-GET /articles?populate[media][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "attributes": {
-        "title": "Por que las focas son focas",
-        "media": [
-          {
-            "id": 2,
-            "attributes": {
-              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "id": 4,
-      "attributes": {
-        "title": "Por que explorer solo lo usamos para descargar otro navegador",
-        "media": null
-      }
-    }
-  ],
-  "meta": { "pagination": { "total": 2 } }
-}
-```
-
-</details>
-
----
-
-### 2.2  Get **all** articles authored by a given profile
-
-```http
-GET /articles?filters[author_profile][id][$eq]=2&populate[media][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 2,
-      "attributes": {
-        "title": "Por que las focas son focas",
-        "media": [
-          {
-            "attributes": {
-              "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
-            }
-          }
-        ]
-      }
-    }
-  ],
-  "meta": { "pagination": { "total": 1 } }
-}
-```
-
-</details>
-
----
-
-## 3 · Podcast episodes
-
-### 3.1  Get **all** podcast episodes (+ media URL)
-
-```http
-GET /podcasts?populate[image][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "hqbw0e8fpwdeiu4a5jcbur6x",
-      "title": "Desarrollar videojuegos en Guatemala | EP 1 Dennis Aldana",
-      "date_publication": "2024-09-19",
-      "link": "https://www.youtube.com/watch?v=zlSbBsJYFGA",
-      "createdAt": "2025-07-12T22:29:05.874Z",
-      "updatedAt": "2025-07-12T22:29:05.874Z",
-      "publishedAt": "2025-07-12T22:29:05.679Z",
-      "locale": "en",
-      "image": {
-        "id": 3,
-        "documentId": "m8ru6j4tdtd7qd2qmjtdjmsu",
-        "url": "/uploads/Screenshot_2025_07_12_162816_0a9f9bf1c9.png"
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
-
-</details>
-
----
-
-### 3.2  Get **one** podcast episode 
-
-```http
-GET /podcasts?filters[id][$eq]=1&populate[image][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": [
-    {
-      "id": 1,
-      "documentId": "hqbw0e8fpwdeiu4a5jcbur6x",
-      "title": "Desarrollar videojuegos en Guatemala | EP 1 Dennis Aldana",
-      "date_publication": "2024-09-19",
-      "link": "https://www.youtube.com/watch?v=zlSbBsJYFGA",
-      "createdAt": "2025-07-12T22:29:05.874Z",
-      "updatedAt": "2025-07-12T22:29:05.874Z",
-      "publishedAt": "2025-07-12T22:29:05.679Z",
-      "locale": "en",
-      "image": {
-        "id": 3,
-        "documentId": "m8ru6j4tdtd7qd2qmjtdjmsu",
-        "url": "/uploads/Screenshot_2025_07_12_162816_0a9f9bf1c9.png"
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "pageSize": 25,
-      "pageCount": 1,
-      "total": 1
-    }
-  }
-}
-```
-
-</details>
-
----
-## 4 · Podcast crew
-
-### 4.1  Get **all** podcast crew (+ media URL)
-
-```http
-GET /podcast-crew?populate[photos][fields][0]=url
-```
-
-<details>
-<summary>Example response (JSON)</summary>
-
-```json
-{
-  "data": {
-    "id": 1,
-    "documentId": "z9ts5zpjpsnskxax1fe17a48",
-    "nombre": "enTERAte",
-    "conductores": {
-      "conductor_1": {
-        "año": "4to",
-        "nombre": "Sebastian Huertas"
-      },
-      "conductor_2": {
-        "año": "4to",
-        "nombre": "Sofia Garcia"
-      }
-    },
-    "proposito": "Ser un podcast educativo y que ayude a los de nuevo ingreso o a mas gente a interesarse por Ciencias de la computacion",
-    "createdAt": "2025-07-13T23:46:30.484Z",
-    "updatedAt": "2025-07-13T23:56:38.622Z",
-    "publishedAt": "2025-07-13T23:56:37.920Z",
-    "locale": "en",
-    "photos": [
-      {
-        "id": 2,
-        "documentId": "v523h1ahq3mq01uawb12xbmx",
-        "url": "/uploads/1200px_Seehund11cele4_edit_a95fe9d5a8.jpg"
-      },
-      {
-        "id": 1,
-        "documentId": "s6ryiy7s19b6ypojrf4hxcw5",
-        "url": "/uploads/sonic_567a1e1ae3.jpg"
-      }
-    ]
-  },
-  "meta": {}
-}
-```
-
-</details>
-
 ---
 
 
-## 📚 Learn more
+## 📚 Strapi DOC
 
 - [Resource center](https://strapi.io/resource-center) - Strapi resource center.
 - [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
@@ -368,12 +211,3 @@ GET /podcast-crew?populate[photos][fields][0]=url
 
 Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
 
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
