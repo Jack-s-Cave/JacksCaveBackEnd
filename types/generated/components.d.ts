@@ -17,7 +17,7 @@ export interface AsociacionMiembros extends Struct.ComponentSchema {
       ]
     >;
     curriculum: Schema.Attribute.Text;
-    foto: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    foto: Schema.Attribute.Media<'images'>;
     nombre: Schema.Attribute.String;
     year_estudiante: Schema.Attribute.Enumeration<
       [

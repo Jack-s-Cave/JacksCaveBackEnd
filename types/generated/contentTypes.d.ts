@@ -394,10 +394,7 @@ export interface ApiArticleMdArticleMd extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     Descripcion: Schema.Attribute.Text & Schema.Attribute.Required;
     fecha_de_publicacion: Schema.Attribute.Date;
-    imagenes: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    imagenes: Schema.Attribute.Media<'images', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -507,8 +504,7 @@ export interface ApiAuthorProfileAuthorProfile
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    foto: Schema.Attribute.Media<'images' | 'files'> &
-      Schema.Attribute.Required;
+    foto: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -601,7 +597,7 @@ export interface ApiPodcastCrewPodcastCrew extends Struct.SingleTypeSchema {
           localized: true;
         };
       }>;
-    photos: Schema.Attribute.Media<'images' | 'videos', true> &
+    photos: Schema.Attribute.Media<'images', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -647,7 +643,7 @@ export interface ApiPodcastPodcast extends Struct.CollectionTypeSchema {
           localized: true;
         };
       }>;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+    image: Schema.Attribute.Media<'images'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;

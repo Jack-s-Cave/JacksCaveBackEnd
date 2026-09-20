@@ -51,8 +51,7 @@
       },
       "multiple": true,
       "allowedTypes": [
-        "images",
-        "videos"
+        "images"
       ]
     },
     "hero_image": {
